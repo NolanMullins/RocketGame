@@ -9,6 +9,10 @@ public class PlayerController : MonoBehaviour
 
     private float rotationAngle;
     private float rotationAngleVelocity;
+    public float rotationCap;
+    public float speedInc;
+    public float friction;
+    public float helper;
 
     private Rigidbody2D myBody;
 
@@ -26,7 +30,7 @@ public class PlayerController : MonoBehaviour
     {
         bool flag = true;
         bool left = false;
-        bool right = false;
+        bool right = false ;
         foreach (Touch touch in Input.touches)
         {
             if (touch.position.x < Screen.width / 2)
@@ -43,25 +47,34 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || left)
         {
             //myBody.transform.Rotate(Vector3.forward * Time.deltaTime * roationRate);
-            rotationAngleVelocity += 0.05f*(roationRate * Time.deltaTime);
-            if (rotationAngleVelocity > roationRate * Time.deltaTime)
+            rotationAngleVelocity += speedInc*(roationRate * Time.deltaTime);
+            //hard cap
+            if (rotationAngleVelocity > roationRate * Time.deltaTime * rotationCap)
             {
-                rotationAngleVelocity = roationRate * Time.deltaTime;
+                rotationAngleVelocity = roationRate * Time.deltaTime * rotationCap;
             }
             flag = false;
         }
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || right)
         {
             //myBody.transform.Rotate(Vector3.back * Time.deltaTime * roationRate);
-            rotationAngleVelocity += 0.05f*(-roationRate * Time.deltaTime);
-            if (rotationAngleVelocity < -roationRate * Time.deltaTime)
+            rotationAngleVelocity += speedInc*(-roationRate * Time.deltaTime);
+            //hard cap
+            if (rotationAngleVelocity < -roationRate * Time.deltaTime * rotationCap)
             {
-                rotationAngleVelocity = -roationRate * Time.deltaTime;
+                rotationAngleVelocity = -roationRate * Time.deltaTime * rotationCap;
             }
             flag = false;
         }
+
         if (flag && rotationAngleVelocity != 0)
-            rotationAngleVelocity -= 0.04f*Time.deltaTime*(rotationAngleVelocity/Mathf.Abs(rotationAngleVelocity));
+            rotationAngleVelocity -= friction*Time.deltaTime*(rotationAngleVelocity/Mathf.Abs(rotationAngleVelocity));
+
+        //Experimental course assist
+        if (flag && rotationAngle != Mathf.PI*0.5)
+        {
+            rotationAngle -= (rotationAngle-Mathf.PI*0.5f) * helper * Time.deltaTime;
+        }
             
         rotationAngle += rotationAngleVelocity;
         if (rotationAngle >= 180)

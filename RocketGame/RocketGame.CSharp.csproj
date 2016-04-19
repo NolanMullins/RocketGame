@@ -77,8 +77,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\AstroidController.cs" />
-    <Compile Include="Assets\Scripts\AstroidGenerator.cs" />
+    <Compile Include="Assets\Scripts\Astroids\AstroidController.cs" />
+    <Compile Include="Assets\Scripts\Astroids\AstroidGenerator.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\ObjectPooler.cs" />
