@@ -13,6 +13,13 @@ public class PlayerController : MonoBehaviour
     public float speedInc;
     public float friction;
     public float helper;
+    public GameObject explosion;
+    //public ParticleSystem part1;
+    //public ParticleSystem part2;
+
+    public GameManager manager;
+
+    public GameObject lastExplosion;
 
     private Rigidbody2D myBody;
 
@@ -23,6 +30,7 @@ public class PlayerController : MonoBehaviour
     {
         myBody = GetComponent<Rigidbody2D>();
         rotationAngle = Mathf.PI * 0.5f;
+        explosion.SetActive(false);
     }
 
     // Update is called once per frame
@@ -77,30 +85,47 @@ public class PlayerController : MonoBehaviour
         }
             
         rotationAngle += rotationAngleVelocity;
-        if (rotationAngle >= 180)
-            rotationAngle = 180;
+        if (rotationAngle >= Mathf.PI)
+            rotationAngle = Mathf.PI;
         if (rotationAngle <= 0)
             rotationAngle = 0;
 
-        float xVel = Mathf.Cos(rotationAngle) * velocity;
-        myBody.velocity = new Vector2(xVel, Mathf.Sin(rotationAngle) * velocity);
-
-        Vector2 moveDirection = myBody.velocity;
-        if (moveDirection != Vector2.zero)
+        if (Time.deltaTime > 0)
         {
-            float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg - 90;
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            float xVel = Mathf.Cos(rotationAngle) * velocity;
+            myBody.velocity = new Vector2(xVel, Mathf.Sin(rotationAngle) * velocity);
+
+            Vector2 moveDirection = myBody.velocity;
+            if (moveDirection != Vector2.zero)
+            {
+                float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg - 90;
+                transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            }
+
+            myBody.velocity = new Vector2(xVel, 0);
         }
-
-        myBody.velocity = new Vector2(xVel, 0);
-
     }
 
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Astroids")
         {
-            other.gameObject.SetActive(false);
+            //other.gameObject.SetActive(false);
+            explosion.transform.position = transform.position;
+
+            Destroy(lastExplosion);
+            lastExplosion = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
+            lastExplosion.SetActive(true);
+            gameObject.SetActive(false);
+            
+            manager.gameOver();
         }
+    }
+
+    public void resetPlayer()
+    {
+        rotationAngle = Mathf.PI * 0.5f; ;
+        rotationAngleVelocity = 0;
+        myBody.velocity = Vector3.zero;
     }
 }
