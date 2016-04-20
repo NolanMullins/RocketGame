@@ -12,14 +12,18 @@ public class AstroidController : MonoBehaviour {
 
     private float sideVelocity;
 
+    private bool move;
+
     // Use this for initialization
     void Start () {
         destroyPoint = GameObject.Find("DestroyPoint");
+        move = true;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        transform.position = new Vector3(transform.position.x + xVel*Time.deltaTime, transform.position.y - yVel * Time.deltaTime);
+        if (move)
+            transform.position = new Vector3(transform.position.x + xVel*Time.deltaTime, transform.position.y - yVel * Time.deltaTime);
         if (transform.position.y < destroyPoint.transform.position.y)
         {
             //destroy
@@ -31,6 +35,11 @@ public class AstroidController : MonoBehaviour {
     {
         xVel = xv;
         yVel = yv;
+    }
+
+    public void shouldMove(bool move)
+    {
+        this.move = move;
     }
 
 }

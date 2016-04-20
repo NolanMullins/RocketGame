@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour {
     public ScoreManager scoreManager;
     private PlayerController playerController;
     private AstroidGenerator astroidGenerator;
+    public ObjectPooler[] aPools;
+    public ObjectPooler sPool;
 
     // Use this for initialization
     void Start() {
@@ -41,14 +44,18 @@ public class GameManager : MonoBehaviour {
         playerController.resetPlayer();
         player.transform.position = playerStartPosition.position;
         player.transform.rotation = playerStartPosition.rotation;
-
+        astroids.SetActive(true);
+        astroidGenerator.reset();
         AstroidController[] ac = FindObjectsOfType<AstroidController>();
         for (int a = 0; a < ac.Length; a++)
         {
+            ac[a].gameObject.SetActive(true);
+            ac[a].GetComponent<AstroidController>().shouldMove(true);
             ac[a].gameObject.SetActive(false);
         }
         player.SetActive(true);
         scoreManager.reset();
+
     }
 
     public void pauseGame()
@@ -118,6 +125,16 @@ public class GameManager : MonoBehaviour {
     {
         gameOverMenu.SetActive(true);
         scoreManager.collectPoint(false);
+        astroids.SetActive(false);
+        pauseBtn.SetActive(false);
+        for (int a = 0; a < aPools.Length; a++)
+        {
+            for (int b = 0; b < aPools[a].getPool().Count; b++)
+            {
+                aPools[a].getPool()[b].GetComponent<AstroidController>().shouldMove(false);
+            }
+        }
+
         scoreManager.onExit();
 
     }

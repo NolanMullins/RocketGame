@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public GameObject lastExplosion;
 
     private Rigidbody2D myBody;
+    private bool pause;
 
 
 
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
         myBody = GetComponent<Rigidbody2D>();
         rotationAngle = Mathf.PI * 0.5f;
         explosion.SetActive(false);
+        pause = false;
     }
 
     // Update is called once per frame
@@ -84,14 +86,16 @@ public class PlayerController : MonoBehaviour
             rotationAngle -= (rotationAngle-Mathf.PI*0.5f) * helper * Time.deltaTime;
         }
             
-        rotationAngle += rotationAngleVelocity;
-        if (rotationAngle >= Mathf.PI)
-            rotationAngle = Mathf.PI;
-        if (rotationAngle <= 0)
-            rotationAngle = 0;
+        
 
         if (Time.deltaTime > 0)
         {
+            rotationAngle += rotationAngleVelocity * Time.deltaTime * 60;
+            if (rotationAngle >= Mathf.PI)
+                rotationAngle = Mathf.PI;
+            if (rotationAngle <= 0)
+                rotationAngle = 0;
+
             float xVel = Mathf.Cos(rotationAngle) * velocity;
             myBody.velocity = new Vector2(xVel, Mathf.Sin(rotationAngle) * velocity);
 
@@ -108,7 +112,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Astroids")
+        if (other.gameObject.tag == "Astroids" || other.gameObject.tag == "Wall")
         {
             //other.gameObject.SetActive(false);
             explosion.transform.position = transform.position;
@@ -122,10 +126,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Astroids" || other.gameObject.tag == "Wall")
+        {
+            //other.gameObject.SetActive(false);
+            explosion.transform.position = transform.position;
+
+            Destroy(lastExplosion);
+            lastExplosion = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
+            lastExplosion.SetActive(true);
+            gameObject.SetActive(false);
+
+            manager.gameOver();
+        }
+    }
+
     public void resetPlayer()
     {
         rotationAngle = Mathf.PI * 0.5f; ;
         rotationAngleVelocity = 0;
         myBody.velocity = Vector3.zero;
     }
+
 }

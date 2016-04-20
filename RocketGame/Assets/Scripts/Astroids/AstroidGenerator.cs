@@ -3,8 +3,11 @@ using System.Collections;
 
 public class AstroidGenerator : MonoBehaviour {
 
-    public float timeBetweenAstroids;
-    public ObjectPooler objPool;
+    public float startTimeBetweenAstroids;
+    public float minTimeBetween;
+    public float speedUpPerSecond;
+    private float timeBetween;
+    public ObjectPooler[] objPools;
     public GameObject generationPoint;
     //scale Small
     public float sSmall;
@@ -15,7 +18,10 @@ public class AstroidGenerator : MonoBehaviour {
     //Chances
     public int chanceOfBigOne;
     //Velocity
-    public float velocity;
+    public float startVelocity;
+    public float velocityCap;
+    public float velocityIncPerSecond;
+    private float velocity;
     //bounds
     public float xBound;
 
@@ -30,15 +36,24 @@ public class AstroidGenerator : MonoBehaviour {
         timer = 0;
         throwAtPlayer = 0;
         chance = (int)Random.Range(1, 3);
+        velocity = startVelocity;
+        timeBetween = startTimeBetweenAstroids;
     }
 
     // Update is called once per frame
     void Update()
     {
+        timeBetween -= speedUpPerSecond * Time.deltaTime;
+        if (timeBetween < minTimeBetween)
+            timeBetween = minTimeBetween;
+
+        velocity += velocityIncPerSecond * Time.deltaTime;
+        if (velocity > velocityCap)
+            velocity = velocityCap;
         timer += Time.deltaTime;
-        if (timer > timeBetweenAstroids)
+        if (timer > timeBetween)
         {
-            GameObject obj = objPool.getPooledObject();
+            GameObject obj = objPools[Random.Range(0,objPools.Length)].getPooledObject();
             float shift;
             
             if (throwAtPlayer >= chance)
@@ -59,6 +74,7 @@ public class AstroidGenerator : MonoBehaviour {
             //float yVel = Random.Range(sMinVel, sMaxVel); ;
             AstroidController ac = obj.GetComponent<AstroidController>();
             ac.setVelocity(0, velocity);
+            ac.shouldMove(true);
 
             if ((int)Random.Range(0, chanceOfBigOne)==0)
             {
@@ -87,4 +103,10 @@ public class AstroidGenerator : MonoBehaviour {
         obj.transform.localScale = new Vector3(scale, scale, scale);
 
     } 
+
+    public void reset()
+    {
+        velocity = startVelocity;
+        timeBetween = startTimeBetweenAstroids;
+    }
 }

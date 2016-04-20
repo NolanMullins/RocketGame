@@ -40,4 +40,9 @@ public class ObjectPooler : MonoBehaviour {
         pool.Add(obj);
         return obj;
     }
+
+    public List<GameObject> getPool()
+    {
+        return pool;
+    }
 }
