@@ -4,6 +4,8 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
 
+    public AudioSource explosionSound;
+
     public float roationRate;
     public float velocity;
 
@@ -19,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     public GameManager manager;
 
-    public GameObject lastExplosion;
+    private GameObject lastExplosion;
 
     private Rigidbody2D myBody;
 
@@ -113,6 +115,11 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Astroids" || other.gameObject.tag == "Wall")
         {
             //other.gameObject.SetActive(false);
+
+            if (explosionSound.isPlaying)
+                explosionSound.Stop();
+            explosionSound.Play();
+
             explosion.transform.position = transform.position;
 
             Destroy(lastExplosion);
@@ -129,6 +136,11 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Astroids" || other.gameObject.tag == "Wall")
         {
             //other.gameObject.SetActive(false);
+
+            if (explosionSound.isPlaying)
+                explosionSound.Stop();
+            explosionSound.Play();
+
             explosion.transform.position = transform.position;
 
             Destroy(lastExplosion);

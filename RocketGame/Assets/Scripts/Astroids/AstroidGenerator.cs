@@ -53,7 +53,8 @@ public class AstroidGenerator : MonoBehaviour {
         timer += Time.deltaTime;
         if (timer > timeBetween)
         {
-            GameObject obj = objPools[Random.Range(0,objPools.Length)].getPooledObject();
+            int num = Random.Range(0, objPools.Length);
+            GameObject obj = objPools[num].getPooledObject();
             float shift;
             
             if (throwAtPlayer >= chance)
@@ -78,7 +79,7 @@ public class AstroidGenerator : MonoBehaviour {
 
             if ((int)Random.Range(0, chanceOfBigOne)==0)
             {
-                spawnBig(obj);
+                spawnBig(obj, num);
             }
             else
             {
@@ -97,9 +98,12 @@ public class AstroidGenerator : MonoBehaviour {
         obj.transform.localScale = new Vector3(scale, scale, scale);
     }
 
-    private void spawnBig(GameObject obj)
+    private void spawnBig(GameObject obj, int num)
     {
         float scale = Random.Range(bSmall, bBig);
+        //fuck that wide one, seriously
+        if (num == 2)
+            scale *= 0.8f;
         obj.transform.localScale = new Vector3(scale, scale, scale);
 
     } 
