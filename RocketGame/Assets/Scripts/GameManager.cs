@@ -35,7 +35,22 @@ public class GameManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             //UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
-
+            if (mainMenu.activeInHierarchy)
+            {
+                Application.Quit();
+            }
+            else if (pauseMenu.activeInHierarchy)
+            {
+                exitToMain();
+            }
+            else if (gameOverMenu.activeInHierarchy)
+            {
+                exitToMain();
+            }
+            else
+            {
+                pauseGame();
+            }
         }
     }
 
@@ -53,9 +68,18 @@ public class GameManager : MonoBehaviour {
             ac[a].GetComponent<AstroidController>().shouldMove(true);
             ac[a].gameObject.SetActive(false);
         }
+
+        //Unfreeze stars
+        StarController[] stars = FindObjectsOfType<StarController>();
+        for (int a = 0; a < stars.Length; a++)
+        {
+            stars[a].shouldMove(true);
+        }
+
+
         player.SetActive(true);
         scoreManager.reset();
-
+        scoreManager.scoreTextEnabled(true);
     }
 
     public void pauseGame()
@@ -95,16 +119,16 @@ public class GameManager : MonoBehaviour {
         gameOverMenu.SetActive(false);
         playerController.enabled = false;
         astroidGenerator.enabled = false;
-        scoreManager.scoreTextEnabled(false);
+        
         scoreManager.onExit();
         resetGame();
-        
+        scoreManager.scoreTextEnabled(false);
         Time.timeScale = 1;
     }
 
     public void quitGame()
     {
-        
+        Application.Quit();
     }
 
     public void startGame()
@@ -125,8 +149,24 @@ public class GameManager : MonoBehaviour {
     {
         gameOverMenu.SetActive(true);
         scoreManager.collectPoint(false);
+        scoreManager.scoreTextEnabled(false);
         astroids.SetActive(false);
         pauseBtn.SetActive(false);
+
+        //freeze planets
+        PlanetController[] pc = FindObjectsOfType<PlanetController>();
+        for (int a = 0; a < pc.Length; a++)
+        {
+            pc[a].shouldMove(false);
+        }
+
+        //freeze stars
+        StarController[] stars = FindObjectsOfType<StarController>();
+        for (int a = 0; a < stars.Length; a++)
+        {
+            stars[a].shouldMove(false);
+        }
+
         for (int a = 0; a < aPools.Length; a++)
         {
             for (int b = 0; b < aPools[a].getPool().Count; b++)
@@ -134,7 +174,7 @@ public class GameManager : MonoBehaviour {
                 aPools[a].getPool()[b].GetComponent<AstroidController>().shouldMove(false);
             }
         }
-
+  
         scoreManager.onExit();
 
     }

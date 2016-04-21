@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
     public GameObject lastExplosion;
 
     private Rigidbody2D myBody;
-    private bool pause;
 
 
 
@@ -32,7 +31,6 @@ public class PlayerController : MonoBehaviour
         myBody = GetComponent<Rigidbody2D>();
         rotationAngle = Mathf.PI * 0.5f;
         explosion.SetActive(false);
-        pause = false;
     }
 
     // Update is called once per frame
