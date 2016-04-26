@@ -8,14 +8,19 @@ public class GameManager : MonoBehaviour {
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
     public GameObject astroids;
+    public GameObject starGenerator;
     public GameObject player;
     public GameObject pauseBtn;
+    public ControlUI helpBtns;
+    public MusicPlayer musicPlayer;
     public Transform playerStartPosition;
     public ScoreManager scoreManager;
     private PlayerController playerController;
     private AstroidGenerator astroidGenerator;
     public ObjectPooler[] aPools;
     public ObjectPooler sPool;
+
+    private bool firstGame;
 
     // Use this for initialization
     void Start() {
@@ -27,6 +32,8 @@ public class GameManager : MonoBehaviour {
         gameOverMenu.SetActive(false);
         playerController.enabled = false;
         astroidGenerator.enabled = false;
+
+        firstGame = true;
     }
 
     // Update is called once per frame
@@ -60,6 +67,7 @@ public class GameManager : MonoBehaviour {
         player.transform.position = playerStartPosition.position;
         player.transform.rotation = playerStartPosition.rotation;
         astroids.SetActive(true);
+        starGenerator.SetActive(true);
         astroidGenerator.reset();
         AstroidController[] ac = FindObjectsOfType<AstroidController>();
         for (int a = 0; a < ac.Length; a++)
@@ -76,7 +84,6 @@ public class GameManager : MonoBehaviour {
             stars[a].shouldMove(true);
         }
 
-
         player.SetActive(true);
         scoreManager.reset();
         scoreManager.scoreTextEnabled(true);
@@ -88,6 +95,7 @@ public class GameManager : MonoBehaviour {
         pauseBtn.SetActive(false);
         scoreManager.collectPoint(false);
         Time.timeScale = 0f;
+        musicPlayer.stopMusic();
     }
 
     public void resumeGame()
@@ -96,6 +104,7 @@ public class GameManager : MonoBehaviour {
         pauseMenu.SetActive(false);
         pauseBtn.SetActive(true);
         scoreManager.collectPoint(true);
+        musicPlayer.resumeMusic();
     }
 
     public void restartGame()
@@ -107,7 +116,7 @@ public class GameManager : MonoBehaviour {
         scoreManager.collectPoint(true);
         scoreManager.onExit();
         resetGame();
-
+        musicPlayer.resumeMusic();
     }
 
     public void exitToMain()
@@ -115,6 +124,7 @@ public class GameManager : MonoBehaviour {
         pauseMenu.SetActive(false);
         mainMenu.SetActive(true);
         astroids.SetActive(false);
+        starGenerator.SetActive(false);
         pauseBtn.SetActive(false);
         gameOverMenu.SetActive(false);
         playerController.enabled = false;
@@ -122,6 +132,7 @@ public class GameManager : MonoBehaviour {
         
         scoreManager.onExit();
         resetGame();
+        musicPlayer.stopMusic();
         scoreManager.scoreTextEnabled(false);
         Time.timeScale = 1;
     }
@@ -136,12 +147,19 @@ public class GameManager : MonoBehaviour {
         mainMenu.SetActive(false);
         gameOverMenu.SetActive(false);
         astroids.SetActive(true);
+        starGenerator.SetActive(true);
         pauseBtn.SetActive(true);
         playerController.enabled = true;
         astroidGenerator.enabled = true;
         scoreManager.scoreTextEnabled(true);
         scoreManager.collectPoint(true);
         resetGame();
+        musicPlayer.startMusic();
+        if (firstGame)
+        {
+            helpBtns.startAnimation();
+            firstGame = false;
+        }
     }
 
     //called when player dies
@@ -151,6 +169,7 @@ public class GameManager : MonoBehaviour {
         scoreManager.collectPoint(false);
         scoreManager.scoreTextEnabled(false);
         astroids.SetActive(false);
+        starGenerator.SetActive(false);
         pauseBtn.SetActive(false);
 
         //freeze planets
@@ -176,6 +195,7 @@ public class GameManager : MonoBehaviour {
         }
   
         scoreManager.onExit();
+        musicPlayer.stopMusic();
 
     }
 
