@@ -25,6 +25,10 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D myBody;
 
+    //debug
+    private float speedCap;
+    private float frameDelta;
+    private bool checkVal;
 
 
     // Use this for initialization
@@ -52,6 +56,8 @@ public class PlayerController : MonoBehaviour
                 right = true;
             }
         }
+        speedCap = roationRate * Time.deltaTime * rotationCap;
+        frameDelta = Time.deltaTime;
 
         //user Input
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || left)
@@ -85,7 +91,6 @@ public class PlayerController : MonoBehaviour
         {
             rotationAngle -= (rotationAngle-Mathf.PI*0.5f) * helper * Time.deltaTime;
         }
-            
         
 
         if (Time.deltaTime > 0)

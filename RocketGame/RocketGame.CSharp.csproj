@@ -71,8 +71,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Fx Explosion Pack\Script\DestroyEffect.cs" />
-    <Compile Include="Assets\Fx Explosion Pack\Script\csLightControl.cs" />
     <Compile Include="Assets\Scripts\Astroids\AstroidController.cs" />
     <Compile Include="Assets\Scripts\Astroids\AstroidGenerator.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />

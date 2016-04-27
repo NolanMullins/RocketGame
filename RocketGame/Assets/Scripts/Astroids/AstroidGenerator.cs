@@ -24,11 +24,15 @@ public class AstroidGenerator : MonoBehaviour {
     private float velocity;
     //bounds
     public float xBound;
+    public float minSpace;
+    private float lastX;
 
     private float timer;
     private int throwAtPlayer;
     private int chance;
     public GameObject player;
+    
+    
 
     // Use this for initialization
     void Start()
@@ -68,6 +72,17 @@ public class AstroidGenerator : MonoBehaviour {
                 throwAtPlayer++;
                 shift = Random.Range(-xBound, xBound);
             }
+
+            //dont allow them to stack
+            if (Mathf.Abs(lastX - shift) < minSpace)
+            {
+                shift = getNewShift();
+            }
+
+
+            //keep track of last X
+            lastX = shift;
+
             obj.transform.position = new Vector3(generationPoint.transform.position.x + shift, generationPoint.transform.position.y, 0);
             obj.transform.rotation = transform.rotation;
             obj.transform.Rotate(Vector3.forward * Random.Range(0, 360));
@@ -90,6 +105,16 @@ public class AstroidGenerator : MonoBehaviour {
 
             timer = 0;
         }
+    }
+
+    private float getNewShift()
+    {
+        float shift = Random.Range(-xBound, xBound);
+        if (Mathf.Abs(lastX - shift) < minSpace)
+        {
+            return getNewShift();
+        }
+        return shift;
     }
 
     private void spawnSmall(GameObject obj)
