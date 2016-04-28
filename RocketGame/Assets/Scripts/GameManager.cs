@@ -85,13 +85,19 @@ public class GameManager : MonoBehaviour {
         {
             stars[a].shouldMove(true);
         }
+        //freeze fog
+        FogController[] fc = FindObjectsOfType<FogController>();
+        for (int a = 0; a < fc.Length; a++)
+        {
+            fc[a].shouldMove(false);
+        }
 
         //clear fog
-        FogController[] fc = FindObjectsOfType<FogController>();
         for (int a = 0; a < fc.Length; a++)
         {
             fc[a].gameObject.SetActive(false);
         }
+
 
         player.SetActive(true);
         scoreManager.reset();
