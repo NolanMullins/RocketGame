@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
     public ScoreManager scoreManager;
     private PlayerController playerController;
     private AstroidGenerator astroidGenerator;
+    public FogGenerator fogGenerator;
     public ObjectPooler[] aPools;
     public ObjectPooler sPool;
 
@@ -69,6 +70,7 @@ public class GameManager : MonoBehaviour {
         astroids.SetActive(true);
         starGenerator.SetActive(true);
         astroidGenerator.reset();
+        fogGenerator.reset();
         AstroidController[] ac = FindObjectsOfType<AstroidController>();
         for (int a = 0; a < ac.Length; a++)
         {
@@ -82,6 +84,13 @@ public class GameManager : MonoBehaviour {
         for (int a = 0; a < stars.Length; a++)
         {
             stars[a].shouldMove(true);
+        }
+
+        //clear fog
+        FogController[] fc = FindObjectsOfType<FogController>();
+        for (int a = 0; a < fc.Length; a++)
+        {
+            fc[a].gameObject.SetActive(false);
         }
 
         player.SetActive(true);
@@ -117,6 +126,8 @@ public class GameManager : MonoBehaviour {
         scoreManager.onExit();
         resetGame();
         musicPlayer.resumeMusic();
+        fogGenerator.enabled = true;
+        fogGenerator.startGame();
     }
 
     public void exitToMain()
@@ -129,7 +140,8 @@ public class GameManager : MonoBehaviour {
         gameOverMenu.SetActive(false);
         playerController.enabled = false;
         astroidGenerator.enabled = false;
-        
+        fogGenerator.enabled = false;
+
         scoreManager.onExit();
         resetGame();
         musicPlayer.stopMusic();
@@ -153,6 +165,8 @@ public class GameManager : MonoBehaviour {
         astroidGenerator.enabled = true;
         scoreManager.scoreTextEnabled(true);
         scoreManager.collectPoint(true);
+        fogGenerator.enabled = true;
+
         resetGame();
         musicPlayer.startMusic();
         if (firstGame)
@@ -160,6 +174,8 @@ public class GameManager : MonoBehaviour {
             helpBtns.startAnimation();
             firstGame = false;
         }
+
+        fogGenerator.startGame();
     }
 
     //called when player dies
@@ -172,6 +188,14 @@ public class GameManager : MonoBehaviour {
         starGenerator.SetActive(false);
         pauseBtn.SetActive(false);
 
+        fogGenerator.enabled = false;
+        //TODO
+        //freeze fog
+        FogController[] fc = FindObjectsOfType<FogController>();
+        for (int a = 0; a < fc.Length; a++)
+        {
+            fc[a].shouldMove(false);
+        }
         //freeze planets
         PlanetController[] pc = FindObjectsOfType<PlanetController>();
         for (int a = 0; a < pc.Length; a++)

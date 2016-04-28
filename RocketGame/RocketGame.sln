@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketGame.CSharp", "RocketGame.CSharp.csproj", "{FEEC22AF-A3C5-4F55-7AAD-BD517D915497}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketGame.CSharp.Editor", "RocketGame.CSharp.Editor.csproj", "{E5C39D74-D699-3C59-4D30-74D55C900FA3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{FEEC22AF-A3C5-4F55-7AAD-BD517D915497}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEEC22AF-A3C5-4F55-7AAD-BD517D915497}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEEC22AF-A3C5-4F55-7AAD-BD517D915497}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5C39D74-D699-3C59-4D30-74D55C900FA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5C39D74-D699-3C59-4D30-74D55C900FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5C39D74-D699-3C59-4D30-74D55C900FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5C39D74-D699-3C59-4D30-74D55C900FA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
