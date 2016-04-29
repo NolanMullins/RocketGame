@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AstroidGenerator : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class AstroidGenerator : MonoBehaviour {
     public float speedUpPerSecond;
     private float timeBetween;
     public ObjectPooler[] objPools;
+    public ObjectPooler bitPool;
     public GameObject generationPoint;
     //scale Small
     public float sSmall;
@@ -31,8 +33,9 @@ public class AstroidGenerator : MonoBehaviour {
     private int throwAtPlayer;
     private int chance;
     public GameObject player;
-    
-    
+
+    public float explosionForce;
+    public float explosionSpread;
 
     // Use this for initialization
     void Start()
@@ -92,7 +95,8 @@ public class AstroidGenerator : MonoBehaviour {
             ac.setVelocity(0, velocity);
             ac.shouldMove(true);
 
-            if ((int)Random.Range(0, chanceOfBigOne)==0)
+            //big ones disabled
+            if ((int)Random.Range(0, chanceOfBigOne)==-1)
             {
                 spawnBig(obj, num);
             }
@@ -126,9 +130,6 @@ public class AstroidGenerator : MonoBehaviour {
     private void spawnBig(GameObject obj, int num)
     {
         float scale = Random.Range(bSmall, bBig);
-        //fuck that wide one, seriously
-        if (num == 2)
-            scale *= 0.8f;
         obj.transform.localScale = new Vector3(scale, scale, scale);
 
     } 
@@ -138,4 +139,72 @@ public class AstroidGenerator : MonoBehaviour {
         velocity = startVelocity;
         timeBetween = startTimeBetweenAstroids;
     }
+
+    public void blowAstroidUp(GameObject astroid, Vector3 pointOfContact)
+    {
+        List<GameObject> bits = new List<GameObject>();
+        int listSize = Random.Range(4, 6);
+
+        float x = astroid.transform.position.x;
+        float y = astroid.transform.position.y;
+
+        float theta = solveForTheta(astroid, pointOfContact);
+        Debug.Log(theta);
+
+        for (int a = 0; a < listSize; a++)
+        {
+            bits.Add(bitPool.getPooledObject());
+
+            //set position
+            bits[a].transform.position = new Vector3(x, y, 0);
+            bits[a].SetActive(true);
+            float newTheta = Random.Range(-explosionSpread, explosionSpread) + theta;
+
+            Vector2 force;
+            force = new Vector2(Mathf.Cos(newTheta) * explosionForce, Mathf.Sin(newTheta) * explosionForce);
+            //bits[a].GetComponent<Rigidbody2D>().AddForce(force);
+            bits[a].GetComponent<AstroidBit>().setDirection(force);
+            astroid.SetActive(false);
+        }
+    }
+
+    private float solveForTheta(GameObject astroid, Vector3 pointOfContact)
+    {
+        float x = astroid.transform.position.x;
+        float y = astroid.transform.position.y;
+        ////inverse slope
+        float rise = y - pointOfContact.y;
+        float run = x - pointOfContact.x;
+        float hyp = Mathf.Sqrt(Mathf.Pow(rise, 2) + Mathf.Pow(run, 2));
+
+        //get theta
+        
+        float theta = 1;
+        //Debug.Log("Rise: " + rise + " Run: " + run);
+        //Debug.Log("Ax: " + x + " Ay: " + y);
+        //Debug.Log("Cx: " + pointOfContact.x + " Cy: " + pointOfContact.y);
+        //Q1
+        if (rise >= 0 && run >= 0)
+        {
+            theta = Mathf.Asin(rise / hyp);
+        }
+        //Q2
+        else if (rise >= 0 && run <= 0)
+        {
+            theta = Mathf.PI - Mathf.Asin(rise / hyp);
+        }
+        //Q3
+        else if (rise <= 0 && run <= 0)
+        {
+
+        }
+        //Q4
+        else
+        {
+
+        }
+
+        return theta;
+    }
+
 }

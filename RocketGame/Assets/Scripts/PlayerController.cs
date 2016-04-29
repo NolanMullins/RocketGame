@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     //public ParticleSystem part2;
 
     public GameManager manager;
+    public AstroidGenerator astroidGenerator;
 
     private GameObject lastExplosion;
 
@@ -119,19 +120,24 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Astroids" || other.gameObject.tag == "Wall")
         {
-            //other.gameObject.SetActive(false);
+            //contact point
+            Collider2D collider = other.collider;
+            Vector3 contactPoint = other.contacts[0].point;
+
+            //blow up astroid
+            astroidGenerator.blowAstroidUp(other.gameObject, contactPoint);
 
             if (explosionSound.isPlaying)
                 explosionSound.Stop();
             explosionSound.Play();
 
-            explosion.transform.position = transform.position;
+            explosion.transform.position = contactPoint;
 
             Destroy(lastExplosion);
-            lastExplosion = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
+            lastExplosion = (GameObject)Instantiate(explosion, contactPoint, transform.rotation);
             lastExplosion.SetActive(true);
             gameObject.SetActive(false);
-            
+
             manager.gameOver();
         }
     }

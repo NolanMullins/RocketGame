@@ -50,17 +50,17 @@ public class FogGenerator : MonoBehaviour {
         if ((int)Random.Range(0, 2) == 0)
         {
             obj = cubes.getPooledObject();
-            Debug.Log("0");
         }
         else
         {
-            Debug.Log("1");
             obj = quads.getPooledObject();
         }
 
         obj.transform.position = new Vector3(generationPoint.transform.position.x + Random.Range(-xBound, xBound), generationPoint.transform.position.y, 0);
         obj.transform.rotation = transform.rotation;
         obj.transform.Rotate(Vector3.forward * Random.Range(0, 360));
+
+        obj.GetComponent<FogController>().shouldMove(true);
 
         float scale = Random.Range(smallest, biggest);
         obj.transform.localScale = new Vector3(scale, scale, scale);

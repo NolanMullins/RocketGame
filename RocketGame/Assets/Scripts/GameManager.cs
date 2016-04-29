@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour {
     public ObjectPooler[] aPools;
     public ObjectPooler sPool;
 
+    public GameObject credits;
+    public GameObject settings;
+
     private bool firstGame;
 
     // Use this for initialization
@@ -85,6 +88,12 @@ public class GameManager : MonoBehaviour {
         {
             stars[a].shouldMove(true);
         }
+        //clear astroid bits
+        AstroidBit[] bits = FindObjectsOfType<AstroidBit>();
+        for (int a = 0; a < bits.Length; a++)
+        {
+            bits[a].gameObject.SetActive(false);
+        }
         //freeze fog
         FogController[] fc = FindObjectsOfType<FogController>();
         for (int a = 0; a < fc.Length; a++)
@@ -109,6 +118,8 @@ public class GameManager : MonoBehaviour {
         pauseMenu.SetActive(true);
         pauseBtn.SetActive(false);
         scoreManager.collectPoint(false);
+        settings.SetActive(true);
+
         Time.timeScale = 0f;
         musicPlayer.stopMusic();
     }
@@ -120,6 +131,7 @@ public class GameManager : MonoBehaviour {
         pauseBtn.SetActive(true);
         scoreManager.collectPoint(true);
         musicPlayer.resumeMusic();
+        settings.SetActive(false);
     }
 
     public void restartGame()
@@ -134,6 +146,7 @@ public class GameManager : MonoBehaviour {
         musicPlayer.resumeMusic();
         fogGenerator.enabled = true;
         fogGenerator.startGame();
+        settings.SetActive(false);
     }
 
     public void exitToMain()
@@ -147,6 +160,8 @@ public class GameManager : MonoBehaviour {
         playerController.enabled = false;
         astroidGenerator.enabled = false;
         fogGenerator.enabled = false;
+        settings.SetActive(true);
+        credits.SetActive(true);
 
         scoreManager.onExit();
         resetGame();
@@ -172,6 +187,8 @@ public class GameManager : MonoBehaviour {
         scoreManager.scoreTextEnabled(true);
         scoreManager.collectPoint(true);
         fogGenerator.enabled = true;
+        settings.SetActive(false);
+        credits.SetActive(false);
 
         resetGame();
         musicPlayer.startMusic();
@@ -193,6 +210,7 @@ public class GameManager : MonoBehaviour {
         astroids.SetActive(false);
         starGenerator.SetActive(false);
         pauseBtn.SetActive(false);
+        settings.SetActive(true);
 
         fogGenerator.enabled = false;
         //TODO
