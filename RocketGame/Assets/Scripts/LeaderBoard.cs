@@ -28,21 +28,25 @@ public class LeaderBoard : MonoBehaviour {
     private bool hasAccount;
     private bool isSignedIn;
 
+    private List<UnityCallBack> callBackWait;
+    private String user;
+
 	// Use this for initialization
 	void Start () {
         App42API.Initialize("f9be5d84fe0db7822e423961bb3ad4b5caf2c1c484ad829cd7a8ec35906b685f", "a83342e929a1b40c95b7283ac692a60f74a07db8646c790402b0f8192adb4c20");
         inLeaderBoard = false;
-        hasAccount = false;
+        hasAccount = PlayerPrefs.HasKey("Name");
         isSignedIn = false;
+
+        //INIT
+        callBackWait = new List<UnityCallBack>();
         if (hasAccount)
         {
             UserService userService = App42API.BuildUserService();
             UnityCallBack callBack = new UnityCallBack();
-            userService.Authenticate(userName.text, password.text, callBack);
-            if (callBack.wasSuccessful())
-            {
-                isSignedIn = true;
-            }
+            userService.Authenticate(PlayerPrefs.GetString("Name"), PlayerPrefs.GetString("Pass"), callBack);
+            callBack.name = PlayerPrefs.GetString("Name");
+            callBackStack(callBack);
         }
     }
 	
@@ -52,6 +56,8 @@ public class LeaderBoard : MonoBehaviour {
         {
             back(0);
         }
+
+        checkForCallBacks();
 	}
 
     //called on Btn press
@@ -73,7 +79,8 @@ public class LeaderBoard : MonoBehaviour {
 
     public void showLeaderBoardUI()
     {
-        headerTxt.text = "name i rank";
+        headerTxt.text = user+"  i  0001";
+        leaderBoardUI.SetActive(true);
     }
 
     public void showSignIn()
@@ -97,6 +104,7 @@ public class LeaderBoard : MonoBehaviour {
     public void closeLeaderBoard()
     {
         backGroundUI.SetActive(false);
+        leaderBoardUI.SetActive(false);
         inLeaderBoard = false;
         editUI(true);
     }
@@ -110,6 +118,28 @@ public class LeaderBoard : MonoBehaviour {
         showLeaderBoardUI();
     }
 
+    public void callBackStack(UnityCallBack callBack)
+    {
+        callBackWait.Add(callBack);
+    }
+
+    public void checkForCallBacks()
+    {
+        for (int a = 0; a < callBackWait.Count; a++)
+        {
+            if (callBackWait[a].wasSuccessful() && callBackWait[a].calledBack)
+            {
+                isSignedIn = true;
+                back(1);
+                user = callBackWait[a].name;
+                if (!PlayerPrefs.HasKey("Name"))
+                {
+                    saveUser(callBackWait[a].name, callBackWait[a].pass);
+                }
+            }
+        }
+    }
+
     public void signIn()
     {
         UserService userService = App42API.BuildUserService();
@@ -118,29 +148,39 @@ public class LeaderBoard : MonoBehaviour {
         {
             Debug.Log("Signing in");
             userService.Authenticate(signInName.text, signInPassword.text, callBack);
+            callBack.name = signInName.text;
+            callBack.pass = signInPassword.text;
         }
         else
         {
             Debug.Log("Signing up");
             userService.CreateUser(userName.text, password.text, email.text, callBack);
+            callBack.name = userName.text;
+            callBack.pass = password.text;
         }
         
-        if (callBack.wasSuccessful())
-        {
-            isSignedIn = true;
-            back(1);
-        }
+        callBackStack(callBack);
+        
     }
 
+    public void saveUser(String name, String pass)
+    {
+        PlayerPrefs.SetString("Name", name);
+        PlayerPrefs.SetString("Pass", pass);
+    }
 
 
     public class UnityCallBack : App42CallBack
     {
         private bool wasSuc = false;
+        public bool calledBack = false;
+        public String name;
+        public String pass;
         public void OnException(Exception ex)
         {
             Debug.Log("Exception: "+ex);
             wasSuc = false;
+            calledBack = true;
         }
 
         public void OnSuccess(object response)
@@ -148,6 +188,7 @@ public class LeaderBoard : MonoBehaviour {
             User user = (User)response;
             Debug.Log("Welcome: " + user.GetUserName());
             wasSuc = true;
+            calledBack = true;
         }
 
         public bool wasSuccessful()
