@@ -5,7 +5,6 @@ public class AstroidBit : MonoBehaviour {
 
     private float xVel;
     private float yVel;
-    private bool test;
 
     // Use this for initialization
     void Start () {
@@ -21,6 +20,5 @@ public class AstroidBit : MonoBehaviour {
     {
         xVel = dir.x;
         yVel = dir.y;
-        test = true;
     }
 }

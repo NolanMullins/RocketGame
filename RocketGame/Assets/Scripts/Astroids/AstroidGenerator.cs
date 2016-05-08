@@ -149,7 +149,6 @@ public class AstroidGenerator : MonoBehaviour {
         float y = astroid.transform.position.y;
 
         float theta = solveForTheta(astroid, pointOfContact);
-        Debug.Log(theta);
 
         for (int a = 0; a < listSize; a++)
         {

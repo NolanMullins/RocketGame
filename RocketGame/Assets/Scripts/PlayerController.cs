@@ -26,11 +26,6 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D myBody;
 
-    //debug
-    private float speedCap;
-    private float frameDelta;
-    private bool checkVal;
-
 
     // Use this for initialization
     void Start()
@@ -57,8 +52,6 @@ public class PlayerController : MonoBehaviour
                 right = true;
             }
         }
-        speedCap = roationRate * Time.deltaTime * rotationCap;
-        frameDelta = Time.deltaTime;
 
         //user Input
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || left)

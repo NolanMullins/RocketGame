@@ -6,8 +6,8 @@ public class ScoreManager : MonoBehaviour {
 
     public float scorePerSecond;
     public Text scoreText;
-    public Text pauseScore;
-    public Text highScoreText;
+    public Text menuScoreTxt;
+    public Text highScoreTxt;
     private float score;
     private float highScore;
     private bool isAlive;
@@ -26,7 +26,7 @@ public class ScoreManager : MonoBehaviour {
         highScore = 0;
         if (PlayerPrefs.HasKey("HS"))
             highScore = PlayerPrefs.GetFloat("HS");
-        isAlive = true;
+        isAlive = false;
 
         used = new bool[planets.Length];
 
@@ -48,8 +48,8 @@ public class ScoreManager : MonoBehaviour {
             }
         }
         scoreText.text = Mathf.Round(score) + " " + distUnit;
-        pauseScore.text = Mathf.Round(score) + " " + distUnit;
-        highScoreText.text = "High Score\n" + Mathf.Round(highScore) + " " + distUnit;
+        menuScoreTxt.text = Mathf.Round(score) + " " + distUnit;
+        highScoreTxt.text = Mathf.Round(highScore) + " " + distUnit;
     }
 
     

@@ -4,14 +4,17 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
-    public GameObject mainMenu;
-    public GameObject pauseMenu;
-    public GameObject gameOverMenu;
+    //UI
+    public GameObject menu;
+    public GameObject icons;
+    public GameObject pauseBtn;
+    public ControlUI helpBtns;
+
+    //Game
     public GameObject astroids;
     public GameObject starGenerator;
     public GameObject player;
-    public GameObject pauseBtn;
-    public ControlUI helpBtns;
+
     public MusicPlayer musicPlayer;
     public Transform playerStartPosition;
     public ScoreManager scoreManager;
@@ -21,19 +24,14 @@ public class GameManager : MonoBehaviour {
     public ObjectPooler[] aPools;
     public ObjectPooler sPool;
 
-    public GameObject credits;
-    public GameObject settings;
-
     private bool firstGame;
 
     // Use this for initialization
     void Start() {
         playerController = player.GetComponent<PlayerController>();
         astroidGenerator = astroids.GetComponent<AstroidGenerator>();
-        mainMenu.SetActive(true);
+        menu.SetActive(true);
         pauseBtn.SetActive(false);
-        pauseMenu.SetActive(false);
-        gameOverMenu.SetActive(false);
         playerController.enabled = false;
         astroidGenerator.enabled = false;
 
@@ -46,17 +44,9 @@ public class GameManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             //UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
-            if (mainMenu.activeInHierarchy)
+            if (menu.activeInHierarchy)
             {
                 Application.Quit();
-            }
-            else if (pauseMenu.activeInHierarchy)
-            {
-                exitToMain();
-            }
-            else if (gameOverMenu.activeInHierarchy)
-            {
-                exitToMain();
             }
             else
             {
@@ -67,9 +57,11 @@ public class GameManager : MonoBehaviour {
 
     private void resetGame()
     {
+        //reset player
         playerController.resetPlayer();
         player.transform.position = playerStartPosition.position;
         player.transform.rotation = playerStartPosition.rotation;
+
         astroids.SetActive(true);
         starGenerator.SetActive(true);
         astroidGenerator.reset();
@@ -115,10 +107,10 @@ public class GameManager : MonoBehaviour {
 
     public void pauseGame()
     {
-        pauseMenu.SetActive(true);
+        showMenu();
         pauseBtn.SetActive(false);
         scoreManager.collectPoint(false);
-        settings.SetActive(true);
+        helpBtns.gameObject.SetActive(false);
 
         Time.timeScale = 0f;
         musicPlayer.stopMusic();
@@ -127,47 +119,24 @@ public class GameManager : MonoBehaviour {
     public void resumeGame()
     {
         Time.timeScale = 1f;
-        pauseMenu.SetActive(false);
+        hideMenu();
         pauseBtn.SetActive(true);
         scoreManager.collectPoint(true);
         musicPlayer.resumeMusic();
-        settings.SetActive(false);
+
     }
 
     public void restartGame()
     {
         Time.timeScale = 1f;
-        pauseMenu.SetActive(false);
         pauseBtn.SetActive(true);
-        gameOverMenu.SetActive(false);
         scoreManager.collectPoint(true);
         scoreManager.onExit();
         resetGame();
         musicPlayer.resumeMusic();
         fogGenerator.enabled = true;
         fogGenerator.startGame();
-        settings.SetActive(false);
-    }
-
-    public void exitToMain()
-    {
-        pauseMenu.SetActive(false);
-        mainMenu.SetActive(true);
-        astroids.SetActive(false);
-        starGenerator.SetActive(false);
-        pauseBtn.SetActive(false);
-        gameOverMenu.SetActive(false);
-        playerController.enabled = false;
-        astroidGenerator.enabled = false;
-        fogGenerator.enabled = false;
-        settings.SetActive(true);
-        credits.SetActive(true);
-
-        scoreManager.onExit();
-        resetGame();
-        musicPlayer.stopMusic();
-        scoreManager.scoreTextEnabled(false);
-        Time.timeScale = 1;
+        hideMenu();
     }
 
     public void quitGame()
@@ -177,8 +146,7 @@ public class GameManager : MonoBehaviour {
 
     public void startGame()
     {
-        mainMenu.SetActive(false);
-        gameOverMenu.SetActive(false);
+        hideMenu();
         astroids.SetActive(true);
         starGenerator.SetActive(true);
         pauseBtn.SetActive(true);
@@ -187,8 +155,6 @@ public class GameManager : MonoBehaviour {
         scoreManager.scoreTextEnabled(true);
         scoreManager.collectPoint(true);
         fogGenerator.enabled = true;
-        settings.SetActive(false);
-        credits.SetActive(false);
 
         resetGame();
         musicPlayer.startMusic();
@@ -199,18 +165,20 @@ public class GameManager : MonoBehaviour {
         }
 
         fogGenerator.startGame();
+
+        Time.timeScale = 1;
     }
 
     //called when player dies
     public void gameOver()
     {
-        gameOverMenu.SetActive(true);
+        showMenu();
         scoreManager.collectPoint(false);
         scoreManager.scoreTextEnabled(false);
         astroids.SetActive(false);
         starGenerator.SetActive(false);
         pauseBtn.SetActive(false);
-        settings.SetActive(true);
+        helpBtns.gameObject.SetActive(false);
 
         fogGenerator.enabled = false;
         //TODO
@@ -241,10 +209,33 @@ public class GameManager : MonoBehaviour {
                 aPools[a].getPool()[b].GetComponent<AstroidController>().shouldMove(false);
             }
         }
-  
+
         scoreManager.onExit();
         musicPlayer.stopMusic();
 
+        //reset player
+        playerController.resetPlayer();
+        player.transform.position = playerStartPosition.position;
+        player.transform.rotation = playerStartPosition.rotation;
+        player.SetActive(true);
+        playerController.enabled = false;
+    }
+
+    public void openLeaderBoard()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("LeaderBoard");
+    }
+
+    public void hideMenu()
+    {
+        icons.SetActive(false);
+        menu.SetActive(false);
+    }
+
+    public void showMenu()
+    {
+        icons.SetActive(true);
+        menu.SetActive(true);
     }
 
 
