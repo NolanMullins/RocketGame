@@ -6,6 +6,7 @@ using System;
 using com.shephertz.app42.paas.sdk.csharp.user;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using com.shephertz.app42.paas.sdk.csharp.game;
 
 public class LeaderBoard : MonoBehaviour {
 
@@ -23,42 +24,52 @@ public class LeaderBoard : MonoBehaviour {
     public InputField signInPassword;
     //
     public Text headerTxt;
+    public Text scoreBoard;
+    public Text scoreBoardScores;
 
     private bool inLeaderBoard;
     private bool hasAccount;
     private bool isSignedIn;
 
     private List<UnityCallBack> callBackWait;
+    private GlobalScoreCallBack globalWait;
     private String user;
+    private ScoreBoardService scoreBoardService;
+    private int highScore;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         App42API.Initialize("f9be5d84fe0db7822e423961bb3ad4b5caf2c1c484ad829cd7a8ec35906b685f", "a83342e929a1b40c95b7283ac692a60f74a07db8646c790402b0f8192adb4c20");
+        scoreBoardService = new ScoreBoardService("f9be5d84fe0db7822e423961bb3ad4b5caf2c1c484ad829cd7a8ec35906b685f", "a83342e929a1b40c95b7283ac692a60f74a07db8646c790402b0f8192adb4c20");
         inLeaderBoard = false;
         hasAccount = PlayerPrefs.HasKey("Name");
         isSignedIn = false;
 
         //INIT
         callBackWait = new List<UnityCallBack>();
+        globalWait = new GlobalScoreCallBack();
+        refreshHighScoreBoard();
         if (hasAccount)
         {
             UserService userService = App42API.BuildUserService();
             UnityCallBack callBack = new UnityCallBack();
             userService.Authenticate(PlayerPrefs.GetString("Name"), PlayerPrefs.GetString("Pass"), callBack);
             callBack.name = PlayerPrefs.GetString("Name");
+            callBack.pass = PlayerPrefs.GetString("Pass");
             callBackStack(callBack);
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-	    if (Input.GetKeyDown(KeyCode.Escape))
+
+    // Update is called once per frame
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             back(0);
         }
 
         checkForCallBacks();
-	}
+        checkForScoreCallBack();
+    }
 
     //called on Btn press
     public void showLeaderBoard()
@@ -79,8 +90,9 @@ public class LeaderBoard : MonoBehaviour {
 
     public void showLeaderBoardUI()
     {
-        headerTxt.text = user+"  i  0001";
+        headerTxt.text = user + "  i  0001";
         leaderBoardUI.SetActive(true);
+        
     }
 
     public void showSignIn()
@@ -132,10 +144,10 @@ public class LeaderBoard : MonoBehaviour {
                 isSignedIn = true;
                 back(1);
                 user = callBackWait[a].name;
-                if (!PlayerPrefs.HasKey("Name"))
-                {
-                    saveUser(callBackWait[a].name, callBackWait[a].pass);
-                }
+                hasAccount = true;
+                saveUser(callBackWait[a].name, callBackWait[a].pass);
+                callBackWait.Remove(callBackWait[a]);
+                submitHighScore(highScore);
             }
         }
     }
@@ -158,9 +170,9 @@ public class LeaderBoard : MonoBehaviour {
             callBack.name = userName.text;
             callBack.pass = password.text;
         }
-        
+
         callBackStack(callBack);
-        
+
     }
 
     public void saveUser(String name, String pass)
@@ -169,6 +181,42 @@ public class LeaderBoard : MonoBehaviour {
         PlayerPrefs.SetString("Pass", pass);
     }
 
+    public void submitHighScore(int score)
+    {
+        String gameName = "Oort";
+        String userName = user;
+        scoreBoardService.SaveUserScore(gameName, userName, score, new ScoreCallBack());
+        refreshHighScoreBoard();
+    }
+
+    public void refreshHighScoreBoard()
+    {
+        String gameName = "Oort";
+        int max = 20;
+        Debug.Log("refresh Start");
+        globalWait = new GlobalScoreCallBack();
+        scoreBoardService.GetTopNRankers(gameName, max, globalWait);
+    }
+
+    public void checkForScoreCallBack()
+    {
+        if (globalWait.calledBack)
+        {
+            refreshHighScoreTxt(globalWait.getGame());
+            globalWait.refreshable = true;
+        }
+    }
+
+    public void refreshHighScoreTxt(Game game)
+    {
+        scoreBoard.text = "";
+        scoreBoardScores.text = "";
+        for (int i = 0; i < game.GetScoreList().Count; i++)
+        {
+            scoreBoard.text += game.GetScoreList()[i].GetUserName() + "\n";
+            scoreBoardScores.text += game.GetScoreList()[i].GetValue() + "\n";
+        }
+    }
 
     public class UnityCallBack : App42CallBack
     {
@@ -197,11 +245,63 @@ public class LeaderBoard : MonoBehaviour {
         }
     }
 
+    public class ScoreCallBack : App42CallBack
+    {
+        public void OnSuccess(object response)
+        {
+            Game game = (Game)response;
+            App42Log.Console("gameName is " + game.GetName());
+            for (int i = 0; i < game.GetScoreList().Count; i++)
+            {
+                App42Log.Console("userName is : " + game.GetScoreList()[i].GetUserName());
+                App42Log.Console("score is : " + game.GetScoreList()[i].GetValue());
+                //PlayerPrefs.SetString("scoreID", game.GetScoreList()[i].GetScoreId());
+            }
+        }
+        public void OnException(Exception e)
+        {
+            App42Log.Console("Exception : " + e);
+        }
+    }
+
+    public class GlobalScoreCallBack : App42CallBack
+    {
+        private Game game;
+        public bool calledBack = false;
+        public bool refreshable = false;
+        public void OnSuccess(object response)
+        {
+            calledBack = true;
+            game = (Game)response;
+            Debug.Log("Refreshing HS board");
+        }
+        public void OnException(Exception e)
+        {
+            App42Log.Console("Exception : " + e);
+        }
+
+        public Game getGame()
+        {
+            return game;
+        }
+    }
+
     public void editUI(bool edit)
     {
         for(int a = 0; a < ui.Count; a++)
         {
             ui[a].SetActive(edit);
         }
+    }
+
+    public void setHighScore(int score)
+    {
+        highScore = score;
+    }
+
+    public void signOut()
+    {
+        leaderBoardUI.SetActive(false);
+        showSignIn();
     }
 }

@@ -20,12 +20,17 @@ public class ScoreManager : MonoBehaviour {
 
     private string distUnit = "km";
 
+    public LeaderBoard leaderBoard;
+
     // Use this for initialization
     void Start() {
         //load high score
         highScore = 0;
         if (PlayerPrefs.HasKey("HS"))
+        {
             highScore = PlayerPrefs.GetFloat("HS");
+            leaderBoard.setHighScore((int)Mathf.Round(highScore));
+        }
         isAlive = false;
 
         used = new bool[planets.Length];
@@ -60,6 +65,7 @@ public class ScoreManager : MonoBehaviour {
         {
             highScore = score;
             PlayerPrefs.SetFloat("HS", highScore);
+            leaderBoard.submitHighScore((int)Mathf.Round(score));
         }
     }
 
