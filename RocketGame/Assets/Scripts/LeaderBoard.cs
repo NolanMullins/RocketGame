@@ -26,6 +26,10 @@ public class LeaderBoard : MonoBehaviour {
     public Text headerTxt;
     public Text scoreBoard;
     public Text scoreBoardScores;
+    public Text rank;
+
+    //buttons
+    //public Button refresh;
 
     private bool inLeaderBoard;
     private bool hasAccount;
@@ -48,6 +52,7 @@ public class LeaderBoard : MonoBehaviour {
         //INIT
         callBackWait = new List<UnityCallBack>();
         globalWait = new GlobalScoreCallBack();
+        globalWait.calledBack = true;
         refreshHighScoreBoard();
         if (hasAccount)
         {
@@ -90,14 +95,14 @@ public class LeaderBoard : MonoBehaviour {
 
     public void showLeaderBoardUI()
     {
-        headerTxt.text = user + "  i  0001";
+        headerTxt.text = user;
         leaderBoardUI.SetActive(true);
-        
+        refreshHighScoreBoard();
     }
 
     public void showSignIn()
     {
-        headerTxt.text = "Sign Up";
+        headerTxt.text = "Account";
         signInUI.SetActive(true);
     }
 
@@ -193,9 +198,12 @@ public class LeaderBoard : MonoBehaviour {
     {
         String gameName = "Oort";
         int max = 20;
-        Debug.Log("refresh Start");
-        globalWait = new GlobalScoreCallBack();
-        scoreBoardService.GetTopNRankers(gameName, max, globalWait);
+        if (globalWait.calledBack == true)
+        {
+            Debug.Log("refresh Start");
+            globalWait = new GlobalScoreCallBack();
+            scoreBoardService.GetTopNRankers(gameName, max, globalWait);
+        }
     }
 
     public void checkForScoreCallBack()
@@ -211,8 +219,10 @@ public class LeaderBoard : MonoBehaviour {
     {
         scoreBoard.text = "";
         scoreBoardScores.text = "";
+        rank.text = "";
         for (int i = 0; i < game.GetScoreList().Count; i++)
         {
+            rank.text += (i+1) + ":\n";
             scoreBoard.text += game.GetScoreList()[i].GetUserName() + "\n";
             scoreBoardScores.text += game.GetScoreList()[i].GetValue() + "\n";
         }
@@ -278,6 +288,7 @@ public class LeaderBoard : MonoBehaviour {
         public void OnException(Exception e)
         {
             App42Log.Console("Exception : " + e);
+            calledBack = true;
         }
 
         public Game getGame()
