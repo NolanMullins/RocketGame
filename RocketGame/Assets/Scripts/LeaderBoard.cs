@@ -97,7 +97,6 @@ public class LeaderBoard : MonoBehaviour {
     {
         headerTxt.text = user;
         leaderBoardUI.SetActive(true);
-        refreshHighScoreBoard();
     }
 
     public void showSignIn()
@@ -190,6 +189,7 @@ public class LeaderBoard : MonoBehaviour {
     {
         String gameName = "Oort";
         String userName = user;
+        Debug.Log("Submitting HS");
         scoreBoardService.SaveUserScore(gameName, userName, score, new ScoreCallBack());
         refreshHighScoreBoard();
     }
@@ -200,7 +200,6 @@ public class LeaderBoard : MonoBehaviour {
         int max = 20;
         if (globalWait.calledBack == true)
         {
-            Debug.Log("refresh Start");
             globalWait = new GlobalScoreCallBack();
             scoreBoardService.GetTopNRankers(gameName, max, globalWait);
         }
@@ -283,7 +282,6 @@ public class LeaderBoard : MonoBehaviour {
         {
             calledBack = true;
             game = (Game)response;
-            Debug.Log("Refreshing HS board");
         }
         public void OnException(Exception e)
         {

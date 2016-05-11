@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,11 +22,22 @@ public class PlayerController : MonoBehaviour
 
     public GameManager manager;
     public AstroidGenerator astroidGenerator;
+    public ObjectPooler laserPool;
+    public GameObject laserGunPos;
+
+    public Text textOut;
+    private float healthBarY;
+    public float timeBetweenShots;
+    private float shotTimer;
 
     private GameObject lastExplosion;
 
     private Rigidbody2D myBody;
 
+    private bool left;
+    private bool right;
+
+    private bool shoot;
 
     // Use this for initialization
     void Start()
@@ -33,42 +45,44 @@ public class PlayerController : MonoBehaviour
         myBody = GetComponent<Rigidbody2D>();
         rotationAngle = Mathf.PI * 0.5f;
         explosion.SetActive(false);
+        left = false;
+        right = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         bool flag = true;
-        bool left = false;
-        bool right = false ;
-        foreach (Touch touch in Input.touches)
+
+        //shoot timer
+        shotTimer += Time.deltaTime;
+        if (shotTimer >= timeBetweenShots)
         {
-            if (touch.position.x < Screen.width / 2)
-            {
-                left = true;
-            }
-            else if (touch.position.x > Screen.width / 2)
-            {
-                right = true;
-            }
+            shoot = true;
+            shotTimer = timeBetweenShots;
         }
 
-        //user Input
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || left)
+        //update timer bar
+        textOut.text = (int)(timeBetweenShots-shotTimer)+"";
+
+        bool flyLeft = (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow));
+        bool flyRight = (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow));
+
+        if ((left && !right) || (flyLeft && !flyRight))
         {
             //myBody.transform.Rotate(Vector3.forward * Time.deltaTime * roationRate);
-            rotationAngleVelocity += speedInc*(roationRate * Time.deltaTime);
+            rotationAngleVelocity += speedInc * (roationRate * Time.deltaTime);
             //hard cap
             if (rotationAngleVelocity > roationRate * Time.deltaTime * rotationCap)
             {
                 rotationAngleVelocity = roationRate * Time.deltaTime * rotationCap;
             }
             flag = false;
-        }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || right)
+        } 
+        else if ((right && !left) || (flyRight && !flyLeft))
         {
             //myBody.transform.Rotate(Vector3.back * Time.deltaTime * roationRate);
-            rotationAngleVelocity += speedInc*(-roationRate * Time.deltaTime);
+            rotationAngleVelocity += speedInc * (-roationRate * Time.deltaTime);
             //hard cap
             if (rotationAngleVelocity < -roationRate * Time.deltaTime * rotationCap)
             {
@@ -76,6 +90,12 @@ public class PlayerController : MonoBehaviour
             }
             flag = false;
         }
+        else if ((left && right) || (flyLeft && flyRight))
+        {
+            //FIRE
+            immaFirinMALAZOR();
+        }
+
 
         if (flag && rotationAngleVelocity != 0)
             rotationAngleVelocity -= friction*Time.deltaTime*(rotationAngleVelocity/Mathf.Abs(rotationAngleVelocity));
@@ -156,11 +176,37 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void pushLeft(bool pressed)
+    {
+        left = pressed;
+        Debug.Log("pressed: "+pressed);
+    }
+
+    public void pushRight(bool pressed)
+    {
+        right = pressed;
+    }
+
     public void resetPlayer()
     {
         rotationAngle = Mathf.PI * 0.5f; ;
         rotationAngleVelocity = 0;
         myBody.velocity = Vector3.zero;
+        left = false;
+        right = false;
+        shotTimer = timeBetweenShots;
     }
 
+    private void immaFirinMALAZOR()
+    {
+        if (shoot)
+        {
+            GameObject laser = laserPool.getPooledObject();
+            laser.transform.position = laserGunPos.transform.position;
+            laser.transform.rotation = this.transform.rotation;
+            laser.gameObject.SetActive(true);
+            shoot = false;
+            shotTimer = 0;
+        }
+    }
 }
