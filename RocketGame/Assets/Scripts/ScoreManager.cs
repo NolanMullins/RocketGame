@@ -31,7 +31,7 @@ public class ScoreManager : MonoBehaviour {
             highScore = PlayerPrefs.GetFloat("HS");
             leaderBoard.setHighScore((int)Mathf.Round(highScore));
         }
-        highScore = 0;
+        //highScore = 0;
         isAlive = false;
 
         used = new bool[planets.Length];
