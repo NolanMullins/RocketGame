@@ -10,6 +10,12 @@ public class LAAZZZOOORRRR : PowerUpInterface {
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    
 	}
+
+    public override void usePower()
+    {
+        //Fire the laser
+
+    }
 }

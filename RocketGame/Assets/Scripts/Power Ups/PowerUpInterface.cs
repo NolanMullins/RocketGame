@@ -3,8 +3,9 @@ using System.Collections;
 
 public class PowerUpInterface : MonoBehaviour {
 
-    private Transform holderPosition;
+    public Transform holderPosition;
     private bool moveToHolder;
+    private float speed = 2;
 
     // Use this for initialization
     void Start() {
@@ -13,20 +14,25 @@ public class PowerUpInterface : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        move();
+        
     }
 
-    private void move()
+    protected void move()
+    {
+        if (!moveToHolder)
+            transform.position = new Vector2(transform.position.x, transform.position.y-speed*Time.deltaTime);
+        else
+        {
+
+        }
+    }
+
+    public virtual void usePower()
     {
 
     }
 
-    public void usePower()
-    {
-
-    }
-
-    public void moveGameObjectToHolder(Transform position)
+    protected void moveGameObjectToHolder()
     {
         moveToHolder = true;
     }
@@ -35,4 +41,5 @@ public class PowerUpInterface : MonoBehaviour {
     {
         moveToHolder = false;
     }
+
 }

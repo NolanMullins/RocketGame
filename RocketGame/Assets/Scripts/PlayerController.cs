@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Astroids" || other.gameObject.tag == "Wall")
         {
             //contact point
-            Collider2D collider = other.collider;
+            //Collider2D collider = other.collider;
             Vector3 contactPoint = other.contacts[0].point;
 
             //blow up astroid

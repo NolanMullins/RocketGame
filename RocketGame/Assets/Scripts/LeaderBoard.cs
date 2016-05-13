@@ -31,7 +31,7 @@ public class LeaderBoard : MonoBehaviour {
     //buttons
     //public Button refresh;
 
-    private bool inLeaderBoard;
+    //private bool inLeaderBoard;
     private bool hasAccount;
     private bool isSignedIn;
 
@@ -45,7 +45,7 @@ public class LeaderBoard : MonoBehaviour {
     void Start() {
         App42API.Initialize("f9be5d84fe0db7822e423961bb3ad4b5caf2c1c484ad829cd7a8ec35906b685f", "a83342e929a1b40c95b7283ac692a60f74a07db8646c790402b0f8192adb4c20");
         scoreBoardService = new ScoreBoardService("f9be5d84fe0db7822e423961bb3ad4b5caf2c1c484ad829cd7a8ec35906b685f", "a83342e929a1b40c95b7283ac692a60f74a07db8646c790402b0f8192adb4c20");
-        inLeaderBoard = false;
+        //inLeaderBoard = false;
         hasAccount = PlayerPrefs.HasKey("Name");
         isSignedIn = false;
 
@@ -80,7 +80,7 @@ public class LeaderBoard : MonoBehaviour {
     public void showLeaderBoard()
     {
         backGroundUI.SetActive(true);
-        inLeaderBoard = true;
+        //inLeaderBoard = true;
         editUI(false);
         if (hasAccount)
         {
@@ -121,7 +121,7 @@ public class LeaderBoard : MonoBehaviour {
     {
         backGroundUI.SetActive(false);
         leaderBoardUI.SetActive(false);
-        inLeaderBoard = false;
+        //inLeaderBoard = false;
         editUI(true);
     }
 
@@ -151,7 +151,7 @@ public class LeaderBoard : MonoBehaviour {
                 hasAccount = true;
                 saveUser(callBackWait[a].name, callBackWait[a].pass);
                 callBackWait.Remove(callBackWait[a]);
-                submitHighScore(highScore);
+                //submitHighScore(highScore);
             }
         }
     }
