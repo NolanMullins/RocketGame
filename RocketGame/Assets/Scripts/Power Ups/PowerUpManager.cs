@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 public class PowerUpManager : MonoBehaviour {
 
-    public List<ObjectPooler> powerUpPools;
+    public List<PowerUpInterface> powerUpPools;
     public List<GameObject> activeObjects;
     public float timeBetweenPowerUps;
     public float timeVar;
 
     public Transform holderPosition;
 
-    private GameObject powerUpHolder;
+    private PowerUpInterface powerUpHolder;
     private float timer;
     private float nextPowerUp;
     private bool isActive;
@@ -60,5 +60,10 @@ public class PowerUpManager : MonoBehaviour {
     private float generateRandomTime()
     {
         return Random.Range(timeBetweenPowerUps - timeVar, timeBetweenPowerUps + timeVar);
+    }
+
+    public void setPowerUp(PowerUpInterface newPower)
+    {
+        powerUpHolder = newPower;
     }
 }
