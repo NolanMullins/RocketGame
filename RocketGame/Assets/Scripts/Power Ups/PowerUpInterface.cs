@@ -3,13 +3,21 @@ using System.Collections;
 
 public class PowerUpInterface : MonoBehaviour {
 
-    public Transform holderPosition;
+    public GameObject holder;
+    public PlayerController player;
     private bool moveToHolder;
     private float speed = 2;
 
     // Use this for initialization
     void Start() {
         
+    }
+
+    protected void init()
+    {
+        holder = GameObject.Find("PowerUpHolder");
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
+        reset();
     }
 
     // Update is called once per frame
@@ -23,7 +31,7 @@ public class PowerUpInterface : MonoBehaviour {
             transform.position = new Vector2(transform.position.x, transform.position.y-speed*Time.deltaTime);
         else
         {
-
+            transform.position = new Vector2(holder.transform.position.x, holder.transform.position.y);
         }
     }
 
@@ -35,6 +43,7 @@ public class PowerUpInterface : MonoBehaviour {
     protected void moveGameObjectToHolder()
     {
         moveToHolder = true;
+        holder.GetComponent<PowerUpHolder>().setPowerUp(this);
     }
 
     public void reset()

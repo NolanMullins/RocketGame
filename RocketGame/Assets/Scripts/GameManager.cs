@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour {
     public GameObject icons;
     public GameObject pauseBtn;
     public ControlUI helpBtns;
-    public GameObject timer;
 
     //Game
     public GameObject astroids;
@@ -37,7 +36,6 @@ public class GameManager : MonoBehaviour {
         astroidGenerator = astroids.GetComponent<AstroidGenerator>();
         menu.SetActive(true);
         pauseBtn.SetActive(false);
-        timer.SetActive(false);
         flightControlLeft.SetActive(false);
         flightControlRight.SetActive(false);
         playerController.enabled = false;
@@ -117,7 +115,6 @@ public class GameManager : MonoBehaviour {
     {
         showMenu();
         pauseBtn.SetActive(false);
-        timer.SetActive(false);
         flightControlLeft.SetActive(false);
         flightControlRight.SetActive(false);
         scoreManager.collectPoint(false);
@@ -132,7 +129,6 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 1f;
         hideMenu();
         pauseBtn.SetActive(true);
-        timer.SetActive(true);
         flightControlLeft.SetActive(true);
         flightControlRight.SetActive(true);
         scoreManager.collectPoint(true);
@@ -144,7 +140,6 @@ public class GameManager : MonoBehaviour {
     {
         Time.timeScale = 1f;
         pauseBtn.SetActive(true);
-        timer.SetActive(true);
         flightControlLeft.SetActive(true);
         flightControlRight.SetActive(true);
         scoreManager.collectPoint(true);
@@ -167,7 +162,6 @@ public class GameManager : MonoBehaviour {
         astroids.SetActive(true);
         starGenerator.SetActive(true);
         pauseBtn.SetActive(true);
-        timer.SetActive(true);
         flightControlLeft.SetActive(true);
         flightControlRight.SetActive(true);
         playerController.enabled = true;
@@ -198,7 +192,6 @@ public class GameManager : MonoBehaviour {
         astroids.SetActive(false);
         starGenerator.SetActive(false);
         pauseBtn.SetActive(false);
-        timer.SetActive(false);
         flightControlLeft.SetActive(false);
         flightControlRight.SetActive(false);
         helpBtns.gameObject.SetActive(false);

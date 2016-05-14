@@ -20,15 +20,15 @@ public class Shield : PowerUpInterface
     public override void usePower()
     {
         //Use shield
-
+        base.player.setShieldActive(true);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("Shield hit player");
             base.moveGameObjectToHolder();
+            //gameObject.SetActive(false);
         }
     }
 }

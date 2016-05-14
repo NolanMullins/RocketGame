@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
     public ObjectPooler laserPool;
     public GameObject laserGunPos;
 
-    public Text textOut;
     private float healthBarY;
     public float timeBetweenShots;
     private float shotTimer;
@@ -37,7 +36,11 @@ public class PlayerController : MonoBehaviour
     private bool left;
     private bool right;
 
+    //Power ups
+    public PowerUpHolder holder;
+    public GameObject shield;
     private bool shoot;
+    private bool hasShield;
 
     // Use this for initialization
     void Start()
@@ -61,9 +64,6 @@ public class PlayerController : MonoBehaviour
             shoot = true;
             shotTimer = timeBetweenShots;
         }
-
-        //update timer bar
-        textOut.text = (int)(timeBetweenShots-shotTimer)+"";
 
         bool flyLeft = (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow));
         bool flyRight = (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow));
@@ -92,8 +92,8 @@ public class PlayerController : MonoBehaviour
         }
         else if ((left && right) || (flyLeft && flyRight))
         {
-            //FIRE
-            immaFirinMALAZOR();
+            //Use power
+            holder.activatePower();
         }
 
 
@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Astroids" || other.gameObject.tag == "Wall")
+        if ((other.gameObject.tag == "Astroids" || other.gameObject.tag == "Wall") && !hasShield)
         {
             //contact point
             //Collider2D collider = other.collider;
@@ -153,6 +153,25 @@ public class PlayerController : MonoBehaviour
 
             manager.gameOver();
         }
+        else if (hasShield && other.gameObject.tag == "Astroids")
+        {
+            Vector3 contactPoint = other.contacts[0].point;
+            //blow up astroid
+            astroidGenerator.blowAstroidUp(other.gameObject, contactPoint);
+
+            if (explosionSound.isPlaying)
+                explosionSound.Stop();
+            explosionSound.Play();
+
+            explosion.transform.position = contactPoint;
+        }
+    }
+
+    public void setShieldActive(bool active)
+    {
+        hasShield = active;
+        if (hasShield)
+            shield.SetActive(true);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -179,7 +198,6 @@ public class PlayerController : MonoBehaviour
     public void pushLeft(bool pressed)
     {
         left = pressed;
-        Debug.Log("pressed: "+pressed);
     }
 
     public void pushRight(bool pressed)
