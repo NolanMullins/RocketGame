@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour {
     public ObjectPooler[] aPools;
     public ObjectPooler sPool;
 
+    public PowerUpManager powerUpManager;
 
     public GameObject flightControlLeft;
     public GameObject flightControlRight;
@@ -42,6 +43,8 @@ public class GameManager : MonoBehaviour {
         astroidGenerator.enabled = false;
 
         firstGame = true;
+        powerUpManager.pauseGame();
+        powerUpManager.resetGame();
     }
 
     // Update is called once per frame
@@ -109,6 +112,7 @@ public class GameManager : MonoBehaviour {
         player.SetActive(true);
         scoreManager.reset();
         scoreManager.scoreTextEnabled(true);
+        powerUpManager.resetGame();
     }
 
     public void pauseGame()
@@ -122,6 +126,7 @@ public class GameManager : MonoBehaviour {
 
         Time.timeScale = 0f;
         musicPlayer.stopMusic();
+        powerUpManager.pauseGame();
     }
 
     public void resumeGame()
@@ -133,6 +138,7 @@ public class GameManager : MonoBehaviour {
         flightControlRight.SetActive(true);
         scoreManager.collectPoint(true);
         musicPlayer.resumeMusic();
+        powerUpManager.resumeGame();
 
     }
 
@@ -149,6 +155,7 @@ public class GameManager : MonoBehaviour {
         fogGenerator.enabled = true;
         fogGenerator.startGame();
         hideMenu();
+        powerUpManager.start();
     }
 
     public void quitGame()
@@ -179,7 +186,7 @@ public class GameManager : MonoBehaviour {
         }
 
         fogGenerator.startGame();
-
+        powerUpManager.start();
         Time.timeScale = 1;
     }
 
@@ -228,6 +235,8 @@ public class GameManager : MonoBehaviour {
 
         scoreManager.onExit();
         musicPlayer.stopMusic();
+
+        powerUpManager.stopGame();
 
         //reset player
         playerController.resetPlayer();

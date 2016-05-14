@@ -206,4 +206,9 @@ public class AstroidGenerator : MonoBehaviour {
         return theta;
     }
 
+    public float getSpeed()
+    {
+        return velocity;
+    }
+
 }

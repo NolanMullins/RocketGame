@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
 
     private float healthBarY;
     public float timeBetweenShots;
+    public float shieldLength;
+    private float shieldTimer;
     private float shotTimer;
 
     private GameObject lastExplosion;
@@ -37,7 +39,7 @@ public class PlayerController : MonoBehaviour
     private bool right;
 
     //Power ups
-    public PowerUpHolder holder;
+    public PowerUpManager powerUps;
     public GameObject shield;
     private bool shoot;
     private bool hasShield;
@@ -93,7 +95,7 @@ public class PlayerController : MonoBehaviour
         else if ((left && right) || (flyLeft && flyRight))
         {
             //Use power
-            holder.activatePower();
+            powerUps.activatePower();
         }
 
 
@@ -126,6 +128,14 @@ public class PlayerController : MonoBehaviour
             }
 
             myBody.velocity = new Vector2(xVel, 0);
+        }
+
+        //Shield
+        if(hasShield)
+        {
+            shieldTimer += Time.deltaTime;
+            if (shieldTimer >= shieldLength)
+                setShieldActive(false);
         }
     }
 
@@ -172,6 +182,8 @@ public class PlayerController : MonoBehaviour
         hasShield = active;
         if (hasShield)
             shield.SetActive(true);
+        else
+            shield.SetActive(false);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -215,7 +227,7 @@ public class PlayerController : MonoBehaviour
         shotTimer = timeBetweenShots;
     }
 
-    private void immaFirinMALAZOR()
+    public void immaFirinMALAZOR()
     {
         if (shoot)
         {

@@ -92,7 +92,6 @@
     <Compile Include="Assets\Scripts\Power Ups\GameObjects\LaZerController.cs" />
     <Compile Include="Assets\Scripts\Power Ups\GameObjects\Shield.cs" />
     <Compile Include="Assets\Scripts\Power Ups\PickUps\LAAZZZOOORRRR.cs" />
-    <Compile Include="Assets\Scripts\Power Ups\PowerUpHolder.cs" />
     <Compile Include="Assets\Scripts\Power Ups\PowerUpInterface.cs" />
     <Compile Include="Assets\Scripts\Power Ups\PowerUpManager.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
