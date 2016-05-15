@@ -3,20 +3,28 @@ using System.Collections;
 
 public class LAAZZZOOORRRR : PowerUpInterface {
 
-	// Use this for initialization
-	void Start () {
-        
+    private bool active;
+
+    // Use this for initialization
+    void Start () {
+        base.type = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        base.move();
+        if (active)
+            base.move();
     }
 
-    public override void usePower()
+    public override bool usePower()
     {
         //Fire the laser
-        base.player.immaFirinMALAZOR();
+        if (active)
+        {
+            base.player.immaFirinMALAZOR();
+            gameObject.SetActive(false);
+        }
+        return active;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -26,5 +34,19 @@ public class LAAZZZOOORRRR : PowerUpInterface {
             base.moveGameObjectToHolder();
             //gameObject.SetActive(false);
         }
+    }
+
+    public override void reset()
+    {
+        base.resetBase();
+    }
+
+    public override void stop()
+    {
+        active = false;
+    }
+    public override void start()
+    {
+        active = true;
     }
 }

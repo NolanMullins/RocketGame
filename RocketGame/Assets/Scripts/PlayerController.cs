@@ -25,12 +25,6 @@ public class PlayerController : MonoBehaviour
     public ObjectPooler laserPool;
     public GameObject laserGunPos;
 
-    private float healthBarY;
-    public float timeBetweenShots;
-    public float shieldLength;
-    private float shieldTimer;
-    private float shotTimer;
-
     private GameObject lastExplosion;
 
     private Rigidbody2D myBody;
@@ -41,7 +35,7 @@ public class PlayerController : MonoBehaviour
     //Power ups
     public PowerUpManager powerUps;
     public GameObject shield;
-    private bool shoot;
+    //private bool shoot;
     private bool hasShield;
 
     // Use this for initialization
@@ -58,14 +52,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         bool flag = true;
-
-        //shoot timer
-        shotTimer += Time.deltaTime;
-        if (shotTimer >= timeBetweenShots)
-        {
-            shoot = true;
-            shotTimer = timeBetweenShots;
-        }
 
         bool flyLeft = (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow));
         bool flyRight = (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow));
@@ -130,13 +116,6 @@ public class PlayerController : MonoBehaviour
             myBody.velocity = new Vector2(xVel, 0);
         }
 
-        //Shield
-        if(hasShield)
-        {
-            shieldTimer += Time.deltaTime;
-            if (shieldTimer >= shieldLength)
-                setShieldActive(false);
-        }
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -174,16 +153,21 @@ public class PlayerController : MonoBehaviour
             explosionSound.Play();
 
             explosion.transform.position = contactPoint;
+
+            Destroy(lastExplosion);
+            lastExplosion = (GameObject)Instantiate(explosion, contactPoint, transform.rotation);
+            lastExplosion.SetActive(true);
         }
     }
 
     public void setShieldActive(bool active)
     {
-        hasShield = active;
-        if (hasShield)
+        if (active)
             shield.SetActive(true);
         else
             shield.SetActive(false);
+
+        hasShield = active;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -224,19 +208,13 @@ public class PlayerController : MonoBehaviour
         myBody.velocity = Vector3.zero;
         left = false;
         right = false;
-        shotTimer = timeBetweenShots;
     }
 
     public void immaFirinMALAZOR()
     {
-        if (shoot)
-        {
             GameObject laser = laserPool.getPooledObject();
             laser.transform.position = laserGunPos.transform.position;
             laser.transform.rotation = this.transform.rotation;
             laser.gameObject.SetActive(true);
-            shoot = false;
-            shotTimer = 0;
-        }
     }
 }

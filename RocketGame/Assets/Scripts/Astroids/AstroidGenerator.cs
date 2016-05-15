@@ -37,6 +37,11 @@ public class AstroidGenerator : MonoBehaviour {
     public float explosionForce;
     public float explosionSpread;
 
+    //explosions
+    public GameObject explosion;
+    private GameObject lastExplosion;
+    public AudioSource explosionSound;
+
     // Use this for initialization
     void Start()
     {
@@ -206,9 +211,47 @@ public class AstroidGenerator : MonoBehaviour {
         return theta;
     }
 
+    public void createExplosion(Transform point)
+    {
+        if (explosionSound.isPlaying)
+            explosionSound.Stop();
+        explosionSound.Play();
+
+        explosion.transform.position = point.position;
+
+        Destroy(lastExplosion);
+        lastExplosion = (GameObject)Instantiate(explosion, point.position, transform.rotation);
+        lastExplosion.SetActive(true);
+    }
+
     public float getSpeed()
     {
         return velocity;
+    }
+
+    public float getDistToClosest(Vector3 position)
+    {
+        float dist = 1000;
+        for (int a = 0; a < objPools.Length; a++)
+        {
+            List<GameObject> pool = objPools[a].getPool();
+            for (int b = 0; b < pool.Count; b++)
+            {
+                if (pool[b].gameObject.activeInHierarchy)
+                {
+                    float temp = getDist(position, pool[a].transform.position);
+                    if (temp < dist)
+                        dist = temp;
+                }
+            }
+        }
+
+        return dist;
+    }
+
+    private float getDist(Vector3 p1, Vector3 p2)
+    {
+        return Mathf.Sqrt(Mathf.Pow(p2.x - p1.x, 2) + Mathf.Pow(p2.y - p1.y, 2));
     }
 
 }

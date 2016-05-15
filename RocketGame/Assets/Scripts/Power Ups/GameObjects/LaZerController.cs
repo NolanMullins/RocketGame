@@ -32,6 +32,7 @@ public class LaZerController : MonoBehaviour
 
             //blow up astroid
             generator.blowAstroidUp(other.gameObject, contactPoint);
+            generator.createExplosion(other.transform);
 
             this.gameObject.SetActive(false);
         }
