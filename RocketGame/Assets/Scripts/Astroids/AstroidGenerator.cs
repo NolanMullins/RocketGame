@@ -59,7 +59,7 @@ public class AstroidGenerator : MonoBehaviour {
         if (timeBetween < minTimeBetween)
             timeBetween = minTimeBetween;
 
-        velocity += velocityIncPerSecond * Time.deltaTime;
+        velocity += (velocityIncPerSecond * Time.deltaTime)/(velocity*0.4f);
         if (velocity > velocityCap)
             velocity = velocityCap;
         timer += Time.deltaTime;
@@ -229,7 +229,7 @@ public class AstroidGenerator : MonoBehaviour {
         return velocity;
     }
 
-    public float getDistToClosest(Vector3 position)
+    /*public float getDistToClosest(Vector3 position)
     {
         float dist = 1000;
         for (int a = 0; a < objPools.Length; a++)
@@ -247,7 +247,7 @@ public class AstroidGenerator : MonoBehaviour {
         }
 
         return dist;
-    }
+    }*/
 
     private float getDist(Vector3 p1, Vector3 p2)
     {

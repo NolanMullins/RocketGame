@@ -28,26 +28,12 @@ public class PowerUpInterface : MonoBehaviour {
         resetBase();
         this.speed = speed;
         gameObject.SetActive(true);
-        gameObject.transform.position = generateNewPoint(leftBound, rightBound, 0);
+        gameObject.transform.position = getPoint(leftBound, rightBound);
+
+        manager.getDistPad().setPosition(gameObject.transform.position);
+        manager.getDistPad().holdPowerUp(this);
     }
 
-    private Vector3 generateNewPoint(float leftBound, float rightBound, int loop)
-    {
-        Vector3 temp = getPoint(leftBound, rightBound);
-        if (loop > 30)
-        {
-            Debug.Log("Failed to find point");
-            return temp;
-        }
-        float dist = manager.getGenerator().getDistToClosest(temp);
-        Debug.Log(dist);
-        if ( dist < 2.3f)
-        {
-            return generateNewPoint(leftBound, rightBound, loop + 1);
-        }
-        return temp;
-        
-    }
 
     private Vector3 getPoint(float leftBound, float rightBound)
     {

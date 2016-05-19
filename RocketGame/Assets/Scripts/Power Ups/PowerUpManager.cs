@@ -18,6 +18,8 @@ public class PowerUpManager : MonoBehaviour {
     public Image powerDisplayImage;
     public List<Sprite> powerUpImages;
 
+    public DistancePad pad;
+
 
     //public Transform holderPosition;
 
@@ -146,5 +148,10 @@ public class PowerUpManager : MonoBehaviour {
     public AstroidGenerator getGenerator()
     {
         return astroids;
+    }
+
+    public DistancePad getDistPad()
+    {
+        return pad;
     }
 }
