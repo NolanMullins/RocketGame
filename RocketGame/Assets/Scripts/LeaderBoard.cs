@@ -46,7 +46,7 @@ public class LeaderBoard : MonoBehaviour {
         App42API.Initialize("f9be5d84fe0db7822e423961bb3ad4b5caf2c1c484ad829cd7a8ec35906b685f", "a83342e929a1b40c95b7283ac692a60f74a07db8646c790402b0f8192adb4c20");
         scoreBoardService = new ScoreBoardService("f9be5d84fe0db7822e423961bb3ad4b5caf2c1c484ad829cd7a8ec35906b685f", "a83342e929a1b40c95b7283ac692a60f74a07db8646c790402b0f8192adb4c20");
         //inLeaderBoard = false;
-        hasAccount = PlayerPrefs.HasKey("Name");
+        //hasAccount = PlayerPrefs.HasKey("Name");
         isSignedIn = false;
 
         //INIT
@@ -128,10 +128,18 @@ public class LeaderBoard : MonoBehaviour {
     public void closeAuthenticationUI()
     {
         if (!isSignedIn)
+        {
             closeLeaderBoard();
+            
+        }
+        else
+        {
+            showLeaderBoardUI();
+        }
+            
         //Hide shit
         signInUI.SetActive(false);
-        showLeaderBoardUI();
+        
     }
 
     public void callBackStack(UnityCallBack callBack)

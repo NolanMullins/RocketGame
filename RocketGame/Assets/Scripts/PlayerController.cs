@@ -208,6 +208,8 @@ public class PlayerController : MonoBehaviour
         myBody.velocity = Vector3.zero;
         left = false;
         right = false;
+        shield.SetActive(false);
+        hasShield = false;
     }
 
     public void immaFirinMALAZOR()
