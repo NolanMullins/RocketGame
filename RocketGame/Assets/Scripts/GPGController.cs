@@ -8,7 +8,6 @@ public class GPGController : MonoBehaviour {
 
     #region PUBLIC_VAR
     public string leaderboard;
-    public Text debug;
     #endregion
     private bool loggedIn;
 
@@ -32,7 +31,7 @@ public class GPGController : MonoBehaviour {
     #region BUTTON_CALLBACKS
     public void onClick()
     {
-        if (!loggedIn)
+        if (!PlayGamesPlatform.Instance.IsAuthenticated())
         {
             LogIn();
         }
