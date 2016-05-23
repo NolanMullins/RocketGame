@@ -20,7 +20,7 @@ public class ScoreManager : MonoBehaviour {
 
     private string distUnit = "km";
 
-    public LeaderBoard leaderBoard;
+    public GPGController leaderBoard;
 
     // Use this for initialization
     void Start() {
@@ -29,6 +29,7 @@ public class ScoreManager : MonoBehaviour {
         if (PlayerPrefs.HasKey("HS"))
         {
             highScore = PlayerPrefs.GetFloat("HS");
+            
             //leaderBoard.setHighScore((int)Mathf.Round(highScore));
         }
         //highScore = 0;
@@ -66,6 +67,7 @@ public class ScoreManager : MonoBehaviour {
         {
             highScore = score;
             PlayerPrefs.SetFloat("HS", highScore);
+            leaderBoard.addHighScore((int)Mathf.Round(PlayerPrefs.GetFloat("HS")));
             //leaderBoard.submitHighScore((int)Mathf.Round(score));
         }
     }
