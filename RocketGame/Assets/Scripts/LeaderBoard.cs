@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using com.shephertz.app42.paas.sdk.csharp;
+//using com.shephertz.app42.paas.sdk.csharp;
 using System;
-using com.shephertz.app42.paas.sdk.csharp.user;
+//using com.shephertz.app42.paas.sdk.csharp.user;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
-using com.shephertz.app42.paas.sdk.csharp.game;
+//using com.shephertz.app42.paas.sdk.csharp.game;
 
 public class LeaderBoard : MonoBehaviour {
 
@@ -34,7 +34,7 @@ public class LeaderBoard : MonoBehaviour {
     //private bool inLeaderBoard;
     private bool hasAccount;
     private bool isSignedIn;
-
+/*
     private List<UnityCallBack> callBackWait;
     private GlobalScoreCallBack globalWait;
     private String user;
@@ -46,7 +46,7 @@ public class LeaderBoard : MonoBehaviour {
         App42API.Initialize("f9be5d84fe0db7822e423961bb3ad4b5caf2c1c484ad829cd7a8ec35906b685f", "a83342e929a1b40c95b7283ac692a60f74a07db8646c790402b0f8192adb4c20");
         scoreBoardService = new ScoreBoardService("f9be5d84fe0db7822e423961bb3ad4b5caf2c1c484ad829cd7a8ec35906b685f", "a83342e929a1b40c95b7283ac692a60f74a07db8646c790402b0f8192adb4c20");
         //inLeaderBoard = false;
-        //hasAccount = PlayerPrefs.HasKey("Name");
+        hasAccount = PlayerPrefs.HasKey("Name");
         isSignedIn = false;
 
         //INIT
@@ -321,4 +321,5 @@ public class LeaderBoard : MonoBehaviour {
         leaderBoardUI.SetActive(false);
         showSignIn();
     }
+    */
 }

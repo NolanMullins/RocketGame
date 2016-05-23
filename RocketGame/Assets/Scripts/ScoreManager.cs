@@ -29,7 +29,7 @@ public class ScoreManager : MonoBehaviour {
         if (PlayerPrefs.HasKey("HS"))
         {
             highScore = PlayerPrefs.GetFloat("HS");
-            leaderBoard.setHighScore((int)Mathf.Round(highScore));
+            //leaderBoard.setHighScore((int)Mathf.Round(highScore));
         }
         //highScore = 0;
         isAlive = false;
@@ -66,7 +66,7 @@ public class ScoreManager : MonoBehaviour {
         {
             highScore = score;
             PlayerPrefs.SetFloat("HS", highScore);
-            leaderBoard.submitHighScore((int)Mathf.Round(score));
+            //leaderBoard.submitHighScore((int)Mathf.Round(score));
         }
     }
 
