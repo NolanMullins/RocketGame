@@ -56,7 +56,7 @@ public class GPGController : MonoBehaviour {
                     PlayerPrefs.SetInt("gpg", 1);
                     if (PlayerPrefs.HasKey("HS"))
                     {
-                        addHighScore((int)Mathf.Round(PlayerPrefs.GetFloat("HS")));    
+                        addScore((int)Mathf.Round(PlayerPrefs.GetFloat("HS")));    
                         //leaderBoard.setHighScore((int)Mathf.Round(highScore));
                     }
                 }
@@ -103,9 +103,9 @@ public class GPGController : MonoBehaviour {
     }
 #endregion
 
-    public void addHighScore(int score)
+    public void addScore(int score)
     {
-        if (loggedIn)
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
             OnAddScoreToLeaderBorad(score);
         }

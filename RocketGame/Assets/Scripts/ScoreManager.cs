@@ -63,11 +63,11 @@ public class ScoreManager : MonoBehaviour {
 
     public void onExit()
     {
+        leaderBoard.addScore((int)Mathf.Round(score));
         if (score > highScore)
         {
             highScore = score;
             PlayerPrefs.SetFloat("HS", highScore);
-            leaderBoard.addHighScore((int)Mathf.Round(PlayerPrefs.GetFloat("HS")));
             //leaderBoard.submitHighScore((int)Mathf.Round(score));
         }
     }
