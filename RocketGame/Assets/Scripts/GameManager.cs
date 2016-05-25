@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
     public GameObject menu;
     public GameObject icons;
     public GameObject pauseBtn;
+    public GameObject resume;
     public ControlUI helpBtns;
 
     //Game
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour {
     public GameObject flightControlRight;
 
     private bool firstGame;
+    private bool paused;
 
     // Use this for initialization
     void Start() {
@@ -41,8 +43,10 @@ public class GameManager : MonoBehaviour {
         flightControlRight.SetActive(false);
         playerController.enabled = false;
         astroidGenerator.enabled = false;
+        resume.SetActive(false);
 
         firstGame = true;
+        paused = false;
         powerUpManager.pauseGame();
         powerUpManager.resetGame();
     }
@@ -127,6 +131,8 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 0f;
         musicPlayer.stopMusic();
         powerUpManager.pauseGame();
+        resume.SetActive(true);
+        paused = true;
     }
 
     public void resumeGame()
@@ -139,7 +145,8 @@ public class GameManager : MonoBehaviour {
         scoreManager.collectPoint(true);
         musicPlayer.resumeMusic();
         powerUpManager.resumeGame();
-
+        resume.SetActive(false);
+        paused = false;
     }
 
     public void restartGame()
@@ -156,6 +163,7 @@ public class GameManager : MonoBehaviour {
         fogGenerator.startGame();
         hideMenu();
         powerUpManager.start();
+        paused = false;
     }
 
     public void quitGame()
@@ -187,6 +195,16 @@ public class GameManager : MonoBehaviour {
 
         fogGenerator.startGame();
         powerUpManager.start();
+
+        //reset player
+        playerController.resetPlayer();
+        player.transform.position = playerStartPosition.position;
+        player.transform.rotation = playerStartPosition.rotation;
+        player.SetActive(true);
+
+        resume.SetActive(false);
+        paused = false;
+
         Time.timeScale = 1;
     }
 
@@ -238,12 +256,20 @@ public class GameManager : MonoBehaviour {
 
         powerUpManager.stopGame();
 
-        //reset player
-        playerController.resetPlayer();
-        player.transform.position = playerStartPosition.position;
-        player.transform.rotation = playerStartPosition.rotation;
-        player.SetActive(true);
         playerController.enabled = false;
+
+    }
+
+    public void startButtonClick()
+    {
+        if (paused)
+        {
+            resumeGame();
+        }
+        else
+        {
+            startGame();
+        }
     }
 
     public void openLeaderBoard()

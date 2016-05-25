@@ -38,6 +38,10 @@ public class PlayerController : MonoBehaviour
     //private bool shoot;
     private bool hasShield;
 
+    private bool slowed;
+    private int length = 2;
+    private float timer;
+
     // Use this for initialization
     void Start()
     {
@@ -114,6 +118,19 @@ public class PlayerController : MonoBehaviour
             }
 
             myBody.velocity = new Vector2(xVel, 0);
+        }
+
+        if (slowed)
+        {
+
+            if (timer < length)
+            {
+                timer += Time.deltaTime;
+            }
+            else
+            {
+                Time.timeScale = 1;
+            }
         }
 
     }
@@ -210,6 +227,7 @@ public class PlayerController : MonoBehaviour
         right = false;
         shield.SetActive(false);
         hasShield = false;
+        slowed = false;
     }
 
     public void immaFirinMALAZOR()
@@ -218,5 +236,12 @@ public class PlayerController : MonoBehaviour
             laser.transform.position = laserGunPos.transform.position;
             laser.transform.rotation = this.transform.rotation;
             laser.gameObject.SetActive(true);
+    }
+
+    public void slowGameDown()
+    {
+        Time.timeScale = 0.5f;
+        timer = 0;
+        slowed = true;
     }
 }
