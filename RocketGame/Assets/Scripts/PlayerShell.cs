@@ -5,12 +5,13 @@ public class PlayerShell : MonoBehaviour {
 
     public PlayerController player;
     public GameObject shield;
+    public Camera main;
     private float gameWidth;
 
     // Use this for initialization
     void Start()
     {
-        gameWidth = 6;
+        gameWidth = main.ViewportToWorldPoint(new Vector3(1,0)).x*2;
     }
 
     // Update is called once per frame

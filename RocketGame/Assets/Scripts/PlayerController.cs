@@ -41,11 +41,12 @@ public class PlayerController : MonoBehaviour
     private bool slowed;
     private int length = 2;
     private float timer;
-
+    public float slowDownBoost;
 
     private float gameWidth;
     public PlayerShell shell;
     private bool letGo;
+    public Camera main;
 
     // Use this for initialization
     void Start()
@@ -55,8 +56,8 @@ public class PlayerController : MonoBehaviour
         explosion.SetActive(false);
         left = false;
         right = false;
-        //TODO
-        gameWidth = 6;
+
+        gameWidth = main.ViewportToWorldPoint(new Vector3(1, 0)).x * 2; ;
     }
 
     // Update is called once per frame
@@ -118,7 +119,10 @@ public class PlayerController : MonoBehaviour
 
         if (Time.deltaTime > 0)
         {
-            rotationAngle += rotationAngleVelocity * Time.deltaTime * 60;
+            float temp = 1;
+            if (Time.timeScale > 0 && Time.timeScale < 1)
+                temp = slowDownBoost;
+            rotationAngle += temp*rotationAngleVelocity * Time.deltaTime * 60;
             if (rotationAngle >= Mathf.PI)
                 rotationAngle = Mathf.PI;
             if (rotationAngle <= 0)
@@ -271,8 +275,13 @@ public class PlayerController : MonoBehaviour
 
     public void slowGameDown()
     {
-        Time.timeScale = 0.5f;
+        Time.timeScale = 0.65f;
         timer = 0;
         slowed = true;
+    }
+
+    public float getGameWidth()
+    {
+        return gameWidth;
     }
 }

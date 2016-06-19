@@ -6,16 +6,26 @@ public class LAAZZZOOORRRR : PowerUpInterface {
     private bool active;
     private int clip = 4;
     private int shotCount;
+    private float gameWidth;
 
     // Use this for initialization
     void Start () {
         base.type = 0;
+        gameWidth = player.getGameWidth();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (active)
             base.move();
+        if (gameObject.transform.position.x > gameWidth/2.0)
+        {
+            gameObject.transform.position = new Vector3(-gameWidth/2.0f, gameObject.transform.position.y);
+        }
+        else if (gameObject.transform.position.x < -gameWidth / 2.0)
+        {
+            gameObject.transform.position = new Vector3(gameWidth/2.0f, gameObject.transform.position.y);
+        }
     }
 
     public override bool usePower()
