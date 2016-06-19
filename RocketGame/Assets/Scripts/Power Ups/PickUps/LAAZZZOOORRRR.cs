@@ -4,6 +4,8 @@ using System.Collections;
 public class LAAZZZOOORRRR : PowerUpInterface {
 
     private bool active;
+    private int clip = 4;
+    private int shotCount;
 
     // Use this for initialization
     void Start () {
@@ -21,8 +23,12 @@ public class LAAZZZOOORRRR : PowerUpInterface {
         //Fire the laser
         if (active)
         {
+            shotCount++;
             base.player.immaFirinMALAZOR();
-            gameObject.SetActive(false);
+            if (shotCount >= clip)
+            {
+                gameObject.SetActive(false);
+            }
         }
         return active;
     }
@@ -39,6 +45,7 @@ public class LAAZZZOOORRRR : PowerUpInterface {
     public override void reset()
     {
         base.resetBase();
+        shotCount = 0;
     }
 
     public override void stop()
@@ -48,5 +55,13 @@ public class LAAZZZOOORRRR : PowerUpInterface {
     public override void start()
     {
         active = true;
+        shotCount = 0;
+    }
+
+    public override bool finsihed()
+    {
+        if (shotCount >= clip)
+            return true;
+        return false;
     }
 }

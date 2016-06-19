@@ -42,6 +42,11 @@ public class PlayerController : MonoBehaviour
     private int length = 2;
     private float timer;
 
+
+    private float gameWidth;
+    public PlayerShell shell;
+    private bool letGo;
+
     // Use this for initialization
     void Start()
     {
@@ -50,6 +55,8 @@ public class PlayerController : MonoBehaviour
         explosion.SetActive(false);
         left = false;
         right = false;
+        //TODO
+        gameWidth = 6;
     }
 
     // Update is called once per frame
@@ -70,6 +77,7 @@ public class PlayerController : MonoBehaviour
                 rotationAngleVelocity = roationRate * Time.deltaTime * rotationCap;
             }
             flag = false;
+            letGo = true;
         } 
         else if ((right && !left) || (flyRight && !flyLeft))
         {
@@ -81,11 +89,20 @@ public class PlayerController : MonoBehaviour
                 rotationAngleVelocity = -roationRate * Time.deltaTime * rotationCap;
             }
             flag = false;
+            letGo = true;
         }
-        else if ((left && right) || (flyLeft && flyRight))
+        else if (((left && right) || (flyLeft && flyRight)))
         {
             //Use power
-            powerUps.activatePower();
+            if (letGo)
+            {
+                powerUps.activatePower();
+                letGo = false;
+            }
+        }
+        else
+        {
+            letGo = true;
         }
 
 
@@ -137,11 +154,17 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
+        if (other.contacts[0].point.x <= gameWidth / 2.0 && other.contacts[0].point.x >= -gameWidth / 2.0)
+            colide(other, 0);
+    }
+
+    public void colide(Collision2D other, int point)
+    {
         if ((other.gameObject.tag == "Astroids" || other.gameObject.tag == "Wall") && !hasShield)
         {
             //contact point
             //Collider2D collider = other.collider;
-            Vector3 contactPoint = other.contacts[0].point;
+            Vector3 contactPoint = other.contacts[point].point;
 
             //blow up astroid
             astroidGenerator.blowAstroidUp(other.gameObject, contactPoint);
@@ -156,7 +179,7 @@ public class PlayerController : MonoBehaviour
             lastExplosion = (GameObject)Instantiate(explosion, contactPoint, transform.rotation);
             lastExplosion.SetActive(true);
             gameObject.SetActive(false);
-
+            shell.gameObject.SetActive(false);
             manager.gameOver();
         }
         else if (hasShield && other.gameObject.tag == "Astroids")
@@ -180,9 +203,15 @@ public class PlayerController : MonoBehaviour
     public void setShieldActive(bool active)
     {
         if (active)
+        {
             shield.SetActive(true);
+            shell.getShield().SetActive(true);
+        }
         else
+        {
             shield.SetActive(false);
+            shell.getShield().SetActive(false);
+        }
 
         hasShield = active;
     }
@@ -226,8 +255,10 @@ public class PlayerController : MonoBehaviour
         left = false;
         right = false;
         shield.SetActive(false);
+        shell.getShield().SetActive(false);
         hasShield = false;
         slowed = false;
+        letGo = true;
     }
 
     public void immaFirinMALAZOR()

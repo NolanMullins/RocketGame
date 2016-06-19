@@ -54,6 +54,7 @@ public class PowerUpManager : MonoBehaviour {
     public void spawn()
     {
         int type = Random.Range(0, (powerUps.Count-1)/2)*3;
+        type = 0;
         for (int a = 0; a < 3; a++)
         {
             if (!powerUps[type + a].gameObject.activeInHierarchy)
@@ -138,9 +139,13 @@ public class PowerUpManager : MonoBehaviour {
         {
             if (powerUpHolder.usePower())
             {
-                powerDisplayImage.gameObject.SetActive(false);
-                powerUpHolder = null;
-                used = true;
+                used = powerUpHolder.finsihed();
+                if (used)
+                {
+                    powerDisplayImage.gameObject.SetActive(false);
+                    powerUpHolder = null;
+                } 
+                //used = true;
             }
         }
     }

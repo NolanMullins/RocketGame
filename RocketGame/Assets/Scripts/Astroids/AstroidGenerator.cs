@@ -32,7 +32,7 @@ public class AstroidGenerator : MonoBehaviour {
     private float timer;
     private int throwAtPlayer;
     private int chance;
-    public GameObject player;
+    public PlayerShell player;
 
     public float explosionForce;
     public float explosionSpread;
@@ -50,6 +50,7 @@ public class AstroidGenerator : MonoBehaviour {
         chance = (int)Random.Range(1, 3);
         velocity = startVelocity;
         timeBetween = startTimeBetweenAstroids;
+
     }
 
     // Update is called once per frame
@@ -72,12 +73,12 @@ public class AstroidGenerator : MonoBehaviour {
             if (throwAtPlayer >= chance)
             {
                 throwAtPlayer = 0;
-                shift = generationPoint.transform.position.x + player.transform.position.x;
+                shift = generationPoint.transform.position.x + player.getX();
                 chance = (int)Random.Range(1, 1);
             }
             else
             {
-                throwAtPlayer++;
+                //throwAtPlayer++;
                 shift = Random.Range(-xBound, xBound);
             }
 

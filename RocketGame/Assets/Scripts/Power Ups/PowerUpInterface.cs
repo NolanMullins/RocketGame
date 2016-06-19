@@ -26,6 +26,7 @@ public class PowerUpInterface : MonoBehaviour {
     public void spawn(float leftBound, float rightBound, float speed)
     {
         resetBase();
+        reset();
         this.speed = speed;
         gameObject.SetActive(true);
         gameObject.transform.position = getPoint(leftBound, rightBound);
@@ -86,6 +87,11 @@ public class PowerUpInterface : MonoBehaviour {
     public virtual void start()
     {
 
+    }
+
+    public virtual bool finsihed()
+    {
+        return true;
     }
 
 }

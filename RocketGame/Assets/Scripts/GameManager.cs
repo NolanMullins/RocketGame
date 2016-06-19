@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour {
     public GameObject astroids;
     public GameObject starGenerator;
     public GameObject player;
+    public GameObject playerShell;
 
     public MusicPlayer musicPlayer;
     public Transform playerStartPosition;
@@ -114,6 +115,7 @@ public class GameManager : MonoBehaviour {
 
 
         player.SetActive(true);
+        playerShell.SetActive(true);
         scoreManager.reset();
         scoreManager.scoreTextEnabled(true);
         powerUpManager.resetGame();
@@ -201,7 +203,7 @@ public class GameManager : MonoBehaviour {
         player.transform.position = playerStartPosition.position;
         player.transform.rotation = playerStartPosition.rotation;
         player.SetActive(true);
-
+        playerShell.SetActive(true);
         resume.SetActive(false);
         paused = false;
 
