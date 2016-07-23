@@ -8,18 +8,24 @@ public class PlayerShell : MonoBehaviour {
     public Camera main;
     private float gameWidth;
 
+    private float swapBuffer = 0.1f;
+    private float timer;
+
     // Use this for initialization
     void Start()
     {
         gameWidth = main.ViewportToWorldPoint(new Vector3(1,0)).x*2;
+        timer = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!(player.transform.position.x <= gameWidth / 2.0 && player.transform.position.x >= -gameWidth / 2.0))
+        timer += Time.deltaTime;
+        if (!(player.transform.position.x <= gameWidth / 2.0 && player.transform.position.x >= -gameWidth / 2.0) && timer > swapBuffer)
         {
             swap();
+            timer = 0;
         }
         int side = 1;
         //check for player position side

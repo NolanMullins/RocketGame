@@ -54,7 +54,6 @@ public class PowerUpManager : MonoBehaviour {
     public void spawn()
     {
         int type = Random.Range(0, (powerUps.Count-1)/2)*3;
-        type = 6;
         for (int a = 0; a < 3; a++)
         {
             if (!powerUps[type + a].gameObject.activeInHierarchy)
