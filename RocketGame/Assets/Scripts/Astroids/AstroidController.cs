@@ -17,13 +17,19 @@ public class AstroidController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         destroyPoint = GameObject.Find("DestroyPoint");
+        rotationRate = Random.Range(-1.01f, 1.01f);
+        rotation = Random.Range(0, 360);
         move = true;
     }
 	
 	// Update is called once per frame
 	void Update () {
         if (move)
+        {
             transform.position = new Vector3(transform.position.x + xVel*Time.deltaTime, transform.position.y - yVel * Time.deltaTime);
+            rotation += rotationRate;
+            transform.rotation = Quaternion.AngleAxis(rotation, Vector3.forward);
+        }
         if (transform.position.y < destroyPoint.transform.position.y)
         {
             //destroy

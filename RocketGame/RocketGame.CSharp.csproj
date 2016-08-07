@@ -57,12 +57,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -253,18 +247,22 @@
     <Compile Include="Assets\Scripts\Astroids\AstroidBit.cs" />
     <Compile Include="Assets\Scripts\Astroids\AstroidController.cs" />
     <Compile Include="Assets\Scripts\Astroids\AstroidGenerator.cs" />
-    <Compile Include="Assets\Scripts\BtnChanger.cs" />
-    <Compile Include="Assets\Scripts\CameraController.cs" />
-    <Compile Include="Assets\Scripts\Click.cs" />
-    <Compile Include="Assets\Scripts\ControlUI.cs" />
     <Compile Include="Assets\Scripts\Credits.cs" />
+    <Compile Include="Assets\Scripts\EnemyController.cs" />
+    <Compile Include="Assets\Scripts\EnemyGenerator.cs" />
     <Compile Include="Assets\Scripts\Fog\FogController.cs" />
     <Compile Include="Assets\Scripts\Fog\FogGenerator.cs" />
-    <Compile Include="Assets\Scripts\GPGController.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\LeaderBoard.cs" />
-    <Compile Include="Assets\Scripts\MusicPlayer.cs" />
-    <Compile Include="Assets\Scripts\ObjectPooler.cs" />
+    <Compile Include="Assets\Scripts\Misc\BtnChanger.cs" />
+    <Compile Include="Assets\Scripts\Misc\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Misc\Click.cs" />
+    <Compile Include="Assets\Scripts\Misc\ControlUI.cs" />
+    <Compile Include="Assets\Scripts\Misc\GPGController.cs" />
+    <Compile Include="Assets\Scripts\Misc\ImgHelper.cs" />
+    <Compile Include="Assets\Scripts\Misc\Lighting.cs" />
+    <Compile Include="Assets\Scripts\Misc\MusicPlayer.cs" />
+    <Compile Include="Assets\Scripts\Misc\ObjectPooler.cs" />
     <Compile Include="Assets\Scripts\Planets\PlanetController.cs" />
     <Compile Include="Assets\Scripts\Planets\PlanetGenerator.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
