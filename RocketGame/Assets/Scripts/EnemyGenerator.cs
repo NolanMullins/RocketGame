@@ -31,8 +31,14 @@ public class EnemyGenerator : MonoBehaviour {
         {
             if (!enemyPool[a].activeInHierarchy)
             {
+                //Debug.Log("Spawning: "+a);
                 GameObject enemy = enemyPool[a];
+                enemy.SetActive(true);
                 enemy.GetComponent<EnemyController>().spawn(new Vector3(pos.position.x, pos.position.y, 0));
+            }
+            else
+            {
+                //Debug.Log("Cant Spawn: " + a);
             }
                 
         }
