@@ -7,15 +7,17 @@ public class EnemyGenerator : MonoBehaviour {
     public List<GameObject> spawns;
     public List<GameObject> enemyPool;
     public float spawnTimer;
+
     private float timer;
+    private float gameTime;
 
 	// Use this for initialization
 	void Start () {
-        
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        gameTime += Time.deltaTime;
         timer += Time.deltaTime;
         if (timer >= spawnTimer)
         {
@@ -43,5 +45,15 @@ public class EnemyGenerator : MonoBehaviour {
                 
         }
         
+    }
+    //TODO
+    public void reset()
+    {
+        gameTime = 0;
+    }
+
+    public void startGame()
+    {
+
     }
 }

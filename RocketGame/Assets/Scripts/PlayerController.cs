@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         left = false;
         right = false;
 
-        gameWidth = main.ViewportToWorldPoint(new Vector3(1, 0)).x * 2; ;
+        gameWidth = main.ViewportToWorldPoint(new Vector3(1, 0)).x * 2;
     }
 
     // Update is called once per frame
@@ -162,9 +162,31 @@ public class PlayerController : MonoBehaviour
             colide(other, 0);
     }
 
+    public void getHit(Collision2D other)
+    {
+        if (other.contacts[0].point.x <= gameWidth / 2.0 && other.contacts[0].point.x >= -gameWidth / 2.0)
+            colide(other, 0);
+    }
+
+    public void getHit(Collider2D other)
+    {
+        if (explosionSound.isPlaying)
+            explosionSound.Stop();
+        explosionSound.Play();
+
+        explosion.transform.position = transform.position;
+
+        Destroy(lastExplosion);
+        lastExplosion = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
+        lastExplosion.SetActive(true);
+        gameObject.SetActive(false);
+
+        manager.gameOver();
+    }
+
     public void colide(Collision2D other, int point)
     {
-        if ((other.gameObject.tag == "Astroids" || other.gameObject.tag == "Wall") && !hasShield)
+        if ((other.gameObject.tag == "Astroids" || other.gameObject.tag == "Wall" || other.gameObject.tag == "enemyLaser") && !hasShield)
         {
             //contact point
             //Collider2D collider = other.collider;

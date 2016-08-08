@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LaZerController : MonoBehaviour
-{
+public class EnemyLaser : MonoBehaviour {
+
     private AstroidGenerator generator;
     private Rigidbody2D rb;
     // Use this for initialization
@@ -21,7 +21,7 @@ public class LaZerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Astroids" || other.gameObject.tag == "enemy")
+        if (other.gameObject.tag == "Player")
         {
             RaycastHit hit;
             Vector3 contactPoint = new Vector3();
@@ -30,17 +30,7 @@ public class LaZerController : MonoBehaviour
                 contactPoint = hit.point;
             }
 
-            //blow up astroid
-            if (other.gameObject.tag == "Astroids")
-            {
-                generator.blowAstroidUp(other.gameObject, contactPoint);
-                generator.createExplosion(other.transform);
-            }
-            else
-            {
-                other.gameObject.GetComponent<EnemyController>().destroy();
-            }
-            
+            other.gameObject.GetComponent<PlayerController>().getHit(other);
 
             this.gameObject.SetActive(false);
         }
@@ -49,3 +39,4 @@ public class LaZerController : MonoBehaviour
     }
 
 }
+
