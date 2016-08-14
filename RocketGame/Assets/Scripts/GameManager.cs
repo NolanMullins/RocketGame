@@ -229,6 +229,7 @@ public class GameManager : MonoBehaviour {
         helpBtns.gameObject.SetActive(false);
 
         fogGenerator.enabled = false;
+        enemyGenerator.disable();
         enemyGenerator.enabled = false;
         //TODO
         //freeze fog

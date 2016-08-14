@@ -13,6 +13,7 @@ public class EnemyGenerator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
     }
 	
 	// Update is called once per frame
@@ -46,10 +47,24 @@ public class EnemyGenerator : MonoBehaviour {
         }
         
     }
+
+    public void disable()
+    {
+        for (int a = 0; a < enemyPool.Count; a ++)
+        {
+            enemyPool[a].GetComponent<EnemyController>().enabled = false;
+        }
+    }
+
     //TODO
     public void reset()
     {
         gameTime = 0;
+        timer = 0;
+        for (int a = 0; a < enemyPool.Count; a++)
+        {
+            enemyPool[a].GetComponent<EnemyController>().enabled = true;
+        }
     }
 
     public void startGame()

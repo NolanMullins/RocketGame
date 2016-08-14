@@ -16,7 +16,7 @@ public class EnemyLaser : MonoBehaviour {
     void Update()
     {
         Vector2 direction = new Vector2(transform.up.x, transform.up.y);
-        rb.velocity = direction * Time.fixedDeltaTime * 300;
+        rb.velocity = direction * Time.deltaTime * 300;
     }
 
     void OnTriggerEnter2D(Collider2D other)

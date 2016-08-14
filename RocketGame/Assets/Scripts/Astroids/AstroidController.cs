@@ -27,7 +27,7 @@ public class AstroidController : MonoBehaviour {
         if (move)
         {
             transform.position = new Vector3(transform.position.x + xVel*Time.deltaTime, transform.position.y - yVel * Time.deltaTime);
-            rotation += rotationRate;
+            rotation += rotationRate*Time.deltaTime*100;
             transform.rotation = Quaternion.AngleAxis(rotation, Vector3.forward);
         }
         if (transform.position.y < destroyPoint.transform.position.y)

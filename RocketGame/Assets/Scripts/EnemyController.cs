@@ -15,6 +15,11 @@ public class EnemyController : MonoBehaviour {
 
     public Camera main;
 
+    //explosion
+    public AudioSource explosionSound;
+    public GameObject explosion;
+    private GameObject lastExplosion;
+
     //private
     private float rotationVelocity;
     private float angle;
@@ -72,7 +77,7 @@ public class EnemyController : MonoBehaviour {
         angle += rotationRate * Time.deltaTime * rotationVelocity;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        myBody.velocity = new Vector2(velocity*Mathf.Sin(angle*DtoR) * -1, velocity*Mathf.Cos(angle*DtoR));
+        myBody.velocity = new Vector2(velocity*Mathf.Sin(angle*DtoR) * -1 * (Time.deltaTime * 65), velocity*Mathf.Cos(angle*DtoR)*(Time.deltaTime * 65));
 
         if (Mathf.Abs(transform.position.x) <= gameWidth)
         {
@@ -102,6 +107,15 @@ public class EnemyController : MonoBehaviour {
     public void destroy()
     {
         gameObject.SetActive(false);
-        //TODO EXPLODE
+        if (explosionSound.isPlaying)
+            explosionSound.Stop();
+        explosionSound.Play();
+
+        explosion.transform.position = transform.position;
+
+        Destroy(lastExplosion);
+        lastExplosion = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
+        lastExplosion.SetActive(true);
+        gameObject.SetActive(false);
     }
 }
