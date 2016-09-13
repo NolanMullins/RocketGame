@@ -95,6 +95,7 @@ public class EnemyController : MonoBehaviour {
         //this.GetComponent<Rigidbody2D>().AddForce(transform.forward.normalized * forceConst*Time.deltaTime);
 
 	}
+    
 
     public void shoot()
     {
