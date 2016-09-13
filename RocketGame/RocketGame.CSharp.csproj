@@ -263,6 +263,7 @@
     <Compile Include="Assets\Scripts\Misc\Lighting.cs" />
     <Compile Include="Assets\Scripts\Misc\MusicPlayer.cs" />
     <Compile Include="Assets\Scripts\Misc\ObjectPooler.cs" />
+    <Compile Include="Assets\Scripts\MyDebug.cs" />
     <Compile Include="Assets\Scripts\Planets\PlanetController.cs" />
     <Compile Include="Assets\Scripts\Planets\PlanetGenerator.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
