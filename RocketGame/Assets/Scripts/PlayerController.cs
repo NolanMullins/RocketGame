@@ -170,18 +170,21 @@ public class PlayerController : MonoBehaviour
 
     public void getHit(Collider2D other)
     {
-        if (explosionSound.isPlaying)
-            explosionSound.Stop();
-        explosionSound.Play();
+        if (!hasShield)
+        {
+            if (explosionSound.isPlaying)
+                explosionSound.Stop();
+            explosionSound.Play();
 
-        explosion.transform.position = transform.position;
+            explosion.transform.position = transform.position;
 
-        Destroy(lastExplosion);
-        lastExplosion = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
-        lastExplosion.SetActive(true);
-        gameObject.SetActive(false);
+            Destroy(lastExplosion);
+            lastExplosion = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
+            lastExplosion.SetActive(true);
+            gameObject.SetActive(false);
 
-        manager.gameOver();
+            manager.gameOver();
+        }
     }
 
     public void colide(Collision2D other, int point)
