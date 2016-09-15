@@ -27,7 +27,7 @@ public class Shield : PowerUpInterface
                 shieldTimer += Time.deltaTime;
                 if (shieldTimer >= shieldLength)
                 {
-                    base.player.setShieldActive(false);
+                    //base.player.setShieldActive(false);
                     gameObject.SetActive(false);
                     isShieldActive = false;
                 }

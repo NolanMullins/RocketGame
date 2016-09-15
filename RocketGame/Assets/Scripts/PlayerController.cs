@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-
+    #region [Variables]
     public AudioSource explosionSound;
 
     public float roationRate;
@@ -37,16 +37,22 @@ public class PlayerController : MonoBehaviour
     public GameObject shield;
     //private bool shoot;
     private bool hasShield;
-
+    
+    //slowmo power up
     private bool slowed;
     private int length = 2;
     private float timer;
     public float slowDownBoost;
 
+    //shield power up
+    public float shieldLength;
+    private float shieldTimer;
+
     private float gameWidth;
     public PlayerShell shell;
     private bool letGo;
     public Camera main;
+    #endregion
 
     // Use this for initialization
     void Start()
@@ -63,6 +69,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        #region [Controls]
         bool flag = true;
 
         bool flyLeft = (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow));
@@ -105,7 +112,7 @@ public class PlayerController : MonoBehaviour
         {
             letGo = true;
         }
-
+        #endregion
 
         if (flag && rotationAngleVelocity != 0)
             rotationAngleVelocity -= friction*Time.deltaTime*(rotationAngleVelocity/Mathf.Abs(rotationAngleVelocity));
@@ -154,8 +161,18 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (hasShield)
+        {
+            shieldTimer += Time.deltaTime;
+            if (shieldTimer >= shieldLength)
+            {
+                setShieldActive(false);
+            }
+        }
+
     }
 
+    #region [Collision]
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.contacts[0].point.x <= gameWidth / 2.0 && other.contacts[0].point.x >= -gameWidth / 2.0)
@@ -229,22 +246,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void setShieldActive(bool active)
-    {
-        if (active)
-        {
-            shield.SetActive(true);
-            shell.getShield().SetActive(true);
-        }
-        else
-        {
-            shield.SetActive(false);
-            shell.getShield().SetActive(false);
-        }
-
-        hasShield = active;
-    }
-
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Astroids" || other.gameObject.tag == "Wall")
@@ -264,6 +265,24 @@ public class PlayerController : MonoBehaviour
 
             manager.gameOver();
         }
+    }
+    #endregion
+
+    public void setShieldActive(bool active)
+    {
+        if (active)
+        {
+            shield.SetActive(true);
+            shell.getShield().SetActive(true);
+            shieldTimer = 0;
+        }
+        else
+        {
+            shield.SetActive(false);
+            shell.getShield().SetActive(false);
+        }
+
+        hasShield = active;
     }
 
     public void pushLeft(bool pressed)
