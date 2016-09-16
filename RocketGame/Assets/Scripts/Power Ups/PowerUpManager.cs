@@ -55,7 +55,7 @@ public class PowerUpManager : MonoBehaviour {
     //make sure power ups dont spawn on astroids
     public void spawn()
     {
-        int type = Random.Range(0, (powerUps.Count-1)/3)*3;
+        int type = Random.Range(0, (powerUps.Count)/3)*3;
         for (int a = 0; a < 3; a++)
         {
             if (!powerUps[type + a].gameObject.activeInHierarchy)

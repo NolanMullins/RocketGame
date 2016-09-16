@@ -22,7 +22,7 @@ public class Shield : PowerUpInterface
             base.move();
 
             //Shield
-            if (isShieldActive)
+            if (isShieldActive && gameObject.activeInHierarchy)
             {
                 //Update User
                 base.infoTxt.text = Mathf.Round(shieldLength - shieldTimer) + "";
@@ -44,6 +44,7 @@ public class Shield : PowerUpInterface
         if (active)
         {
             base.player.setShieldActive(true);
+            base.infoTxt.gameObject.SetActive(true);
             isShieldActive = true;
             shieldTimer = 0;
         }

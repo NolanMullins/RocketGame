@@ -29,6 +29,7 @@ public class SlowMo : PowerUpInterface
             {
                 //despawn
                 gameObject.SetActive(false);
+                slowed = false;
                 base.infoTxt.text = "";
             }
             else
@@ -46,6 +47,7 @@ public class SlowMo : PowerUpInterface
             base.player.slowGameDown();
             infoTxt.gameObject.SetActive(true);
             slowed = true;
+            timer = 0;
             //gameObject.SetActive(false);
         }
         
