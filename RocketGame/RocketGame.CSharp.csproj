@@ -244,6 +244,7 @@
     <Compile Include="Assets\GooglePlayGames\Platforms\TokenClient.cs" />
     <Compile Include="Assets\GooglePlayGames\PluginVersion.cs" />
     <Compile Include="Assets\LazyFog\Scripts\exampleSceneScript.cs" />
+    <Compile Include="Assets\Scripts\AlertLight.cs" />
     <Compile Include="Assets\Scripts\Astroids\AstroidBit.cs" />
     <Compile Include="Assets\Scripts\Astroids\AstroidController.cs" />
     <Compile Include="Assets\Scripts\Astroids\AstroidGenerator.cs" />
