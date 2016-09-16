@@ -270,6 +270,7 @@ public class PlayerController : MonoBehaviour
 
     public void setShieldActive(bool active)
     {
+        Debug.Log(active);
         if (active)
         {
             shield.SetActive(true);

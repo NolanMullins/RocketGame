@@ -33,11 +33,15 @@ public class LAAZZZOOORRRR : PowerUpInterface {
         //Fire the laser
         if (active)
         {
+            if (shotCount == 0)
+                infoTxt.gameObject.SetActive(true);
             shotCount++;
+            base.infoTxt.text = "" + (clip-shotCount);
             base.player.immaFirinMALAZOR();
             if (shotCount >= clip)
             {
                 gameObject.SetActive(false);
+                base.infoTxt.text = "";
             }
         }
         return active;
@@ -48,6 +52,7 @@ public class LAAZZZOOORRRR : PowerUpInterface {
         if (other.gameObject.tag == "Player")
         {
             base.moveGameObjectToHolder();
+            //base.infoTxt.text = "" + clip;
             //gameObject.SetActive(false);
         }
     }

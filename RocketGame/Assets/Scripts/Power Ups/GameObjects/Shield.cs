@@ -20,16 +20,19 @@ public class Shield : PowerUpInterface
         if (active)
         {
             base.move();
+
             //Shield
             if (isShieldActive)
             {
-                
+                //Update User
+                base.infoTxt.text = Mathf.Round(shieldLength - shieldTimer) + "";
                 shieldTimer += Time.deltaTime;
                 if (shieldTimer >= shieldLength)
                 {
                     //base.player.setShieldActive(false);
                     gameObject.SetActive(false);
                     isShieldActive = false;
+                    base.infoTxt.text = "";
                 }
             }
         }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PowerUpInterface : MonoBehaviour {
 
@@ -7,6 +8,7 @@ public class PowerUpInterface : MonoBehaviour {
     public PowerUpManager manager;
     public PlayerController player;
     public Transform destoryPoint;
+    public Text infoTxt;
     private bool moveToHolder;
     private float speed = 2;
     protected int type;

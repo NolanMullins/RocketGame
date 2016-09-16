@@ -20,6 +20,8 @@ public class PowerUpManager : MonoBehaviour {
 
     public DistancePad pad;
 
+    public Text infoTxt;
+
 
     //public Transform holderPosition;
 
@@ -53,7 +55,7 @@ public class PowerUpManager : MonoBehaviour {
     //make sure power ups dont spawn on astroids
     public void spawn()
     {
-        int type = Random.Range(0, (powerUps.Count-1)/2)*3;
+        int type = Random.Range(0, (powerUps.Count-1)/3)*3;
         for (int a = 0; a < 3; a++)
         {
             if (!powerUps[type + a].gameObject.activeInHierarchy)
@@ -123,6 +125,7 @@ public class PowerUpManager : MonoBehaviour {
         powerUpHolder = newPower;
         powerDisplayImage.gameObject.SetActive(true);
         powerDisplayImage.sprite = powerUpImages[type];
+        infoTxt.gameObject.SetActive(false);
         used = false;
     }
 
@@ -139,9 +142,9 @@ public class PowerUpManager : MonoBehaviour {
             if (powerUpHolder.usePower())
             {
                 used = powerUpHolder.finsihed();
+                powerDisplayImage.gameObject.SetActive(false);
                 if (used)
                 {
-                    powerDisplayImage.gameObject.SetActive(false);
                     powerUpHolder = null;
                 } 
                 //used = true;

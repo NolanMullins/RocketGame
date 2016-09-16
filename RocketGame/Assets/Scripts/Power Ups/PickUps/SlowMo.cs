@@ -5,6 +5,10 @@ public class SlowMo : PowerUpInterface
 {
 
     private bool active;
+    private bool slowed;
+
+    private float timer;
+    private float length = 2;
 
     // Use this for initialization
     void Start()
@@ -17,6 +21,21 @@ public class SlowMo : PowerUpInterface
     {
         if (active)
             base.move();
+
+        if (slowed)
+        {
+            timer += Time.deltaTime;
+            if (timer > length)
+            {
+                //despawn
+                gameObject.SetActive(false);
+                base.infoTxt.text = "";
+            }
+            else
+            {
+                base.infoTxt.text = ""+Mathf.Round(length*1/*.5385f*/-timer);
+            }
+        }
     }
 
     public override bool usePower()
@@ -25,7 +44,9 @@ public class SlowMo : PowerUpInterface
         if (active)
         {
             base.player.slowGameDown();
-            gameObject.SetActive(false);
+            infoTxt.gameObject.SetActive(true);
+            slowed = true;
+            //gameObject.SetActive(false);
         }
         
         return active;
