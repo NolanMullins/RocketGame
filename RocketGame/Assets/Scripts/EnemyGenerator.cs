@@ -15,10 +15,11 @@ public class EnemyGenerator : MonoBehaviour {
 
     private float timer;
     private float gameTime;
-
+    private float running;
+    private IEnumerator spawn;
 	// Use this for initialization
-	void Start () {
-        
+    void Start () {
+        running = false;    
     }
 	
 	// Update is called once per frame
@@ -35,16 +36,18 @@ public class EnemyGenerator : MonoBehaviour {
     private void spawnEnemy()
     {
         Transform pos = spawns[Random.Range(0, spawns.Count)].transform;
+        spawn = spawnSeq(pos);
         if (pos.position.x < 0)
             leftLight.startAnimation();
         else
             rightLight.startAnimation();
 
-            StartCoroutine(spawnSeq(pos));        
+            StartCoroutine(spawn);        
     }
 
     IEnumerator spawnSeq(Transform pos)
     {
+        running = true;
         for (int a = 0; a < enemyPool.Count; a++)
         {
             if (!enemyPool[a].activeInHierarchy)
@@ -54,6 +57,7 @@ public class EnemyGenerator : MonoBehaviour {
                 GameObject enemy = enemyPool[a];
                 enemy.SetActive(true);
                 enemy.GetComponent<EnemyController>().spawn(new Vector3(pos.position.x, pos.position.y, 0));
+                running = false;
             }
             else
             {
@@ -70,6 +74,10 @@ public class EnemyGenerator : MonoBehaviour {
         {
             enemyPool[a].GetComponent<EnemyController>().enabled = false;
         }
+        if (isGenerating())
+        {
+            StopCoroutine(spawn);
+        }
     }
 
     //TODO
@@ -81,6 +89,11 @@ public class EnemyGenerator : MonoBehaviour {
         {
             enemyPool[a].GetComponent<EnemyController>().enabled = true;
         }
+    }
+
+    public bool isGenerating()
+    {
+        return running;
     }
 
     public void startGame()
