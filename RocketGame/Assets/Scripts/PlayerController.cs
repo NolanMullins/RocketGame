@@ -150,14 +150,17 @@ public class PlayerController : MonoBehaviour
 
         if (slowed)
         {
-
-            if (timer < length)
+            //need to slow after pause
+            if (timer < length && Time.timeScale > 0)//redundant
             {
+                if (Time.timeScale > 0.65f)
+                    Time.timeScale = 0.65f;
                 timer += Time.deltaTime;
             }
             else
             {
                 Time.timeScale = 1;
+                slowed = false;
             }
         }
 
