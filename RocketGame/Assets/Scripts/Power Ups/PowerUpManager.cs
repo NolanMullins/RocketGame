@@ -76,6 +76,7 @@ public class PowerUpManager : MonoBehaviour {
         if (powerUpHolder != null)
             powerUpHolder.gameObject.SetActive(false);
         powerDisplayImage.gameObject.SetActive(false);
+        infoTxt.text = "";
     }
     public void pauseGame()
     {

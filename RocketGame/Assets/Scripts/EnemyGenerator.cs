@@ -15,7 +15,7 @@ public class EnemyGenerator : MonoBehaviour {
 
     private float timer;
     private float gameTime;
-    private float running;
+    private bool running;
     private IEnumerator spawn;
 	// Use this for initialization
     void Start () {

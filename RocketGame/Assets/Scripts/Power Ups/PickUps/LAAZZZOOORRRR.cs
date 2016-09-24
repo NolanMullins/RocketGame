@@ -70,7 +70,6 @@ public class LAAZZZOOORRRR : PowerUpInterface {
     public override void start()
     {
         active = true;
-        shotCount = 0;
     }
 
     public override bool finsihed()
