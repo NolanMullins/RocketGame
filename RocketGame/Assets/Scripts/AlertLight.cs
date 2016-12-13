@@ -24,7 +24,7 @@ public class AlertLight : MonoBehaviour {
             if (timer < 3.0f)
             {
                 timer += Time.deltaTime;
-                alpha = -.4f * Mathf.Cos(4.19f * timer) + 0.4f; //6.28 -> 3 || 4.19 -> 2
+                alpha = -.4f * Mathf.Cos(4.19f * timer) + 0.4f; //6.28 -> 3s || 4.19 -> 2s
                 setColor(alpha);
             }
             else
