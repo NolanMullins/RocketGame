@@ -52,9 +52,6 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -69,9 +66,6 @@
     </Reference>
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VR">
       <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
@@ -269,7 +263,6 @@
     <Compile Include="Assets\Scripts\Astroids\AstroidGenerator.cs" />
     <Compile Include="Assets\Scripts\Credits.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
-    <Compile Include="Assets\Scripts\EnemyGenerator.cs" />
     <Compile Include="Assets\Scripts\Fog\FogController.cs" />
     <Compile Include="Assets\Scripts\Fog\FogGenerator.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -284,6 +277,8 @@
     <Compile Include="Assets\Scripts\Misc\MusicPlayer.cs" />
     <Compile Include="Assets\Scripts\Misc\ObjectPooler.cs" />
     <Compile Include="Assets\Scripts\MyDebug.cs" />
+    <Compile Include="Assets\Scripts\Other Generators\EnemyGenerator.cs" />
+    <Compile Include="Assets\Scripts\Other Generators\EventGenerator.cs" />
     <Compile Include="Assets\Scripts\Planets\PlanetController.cs" />
     <Compile Include="Assets\Scripts\Planets\PlanetGenerator.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />

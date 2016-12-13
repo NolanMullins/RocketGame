@@ -7,14 +7,11 @@ public class EnemyGenerator : MonoBehaviour {
 
     public List<GameObject> spawns;
     public List<GameObject> enemyPool;
-    public float spawnTimer;
 
     //notification lights
     public AlertLight leftLight;
     public AlertLight rightLight;
 
-    private float timer;
-    private float gameTime;
     private bool running;
     private IEnumerator spawn;
 	// Use this for initialization
@@ -24,16 +21,10 @@ public class EnemyGenerator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        gameTime += Time.deltaTime;
-        timer += Time.deltaTime;
-        if (timer >= spawnTimer)
-        {
-            timer = 0;
-            spawnEnemy();
-        }
+        
 	}
 
-    private void spawnEnemy()
+    public void spawnEnemy()
     {
         Transform pos = spawns[Random.Range(0, spawns.Count)].transform;
         spawn = spawnSeq(pos);
@@ -83,8 +74,6 @@ public class EnemyGenerator : MonoBehaviour {
     //TODO
     public void reset()
     {
-        gameTime = 0;
-        timer = 0;
         for (int a = 0; a < enemyPool.Count; a++)
         {
             enemyPool[a].GetComponent<EnemyController>().enabled = true;
@@ -94,10 +83,5 @@ public class EnemyGenerator : MonoBehaviour {
     public bool isGenerating()
     {
         return running;
-    }
-
-    public void startGame()
-    {
-
     }
 }

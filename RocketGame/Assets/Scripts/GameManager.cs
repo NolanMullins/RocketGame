@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
     private PlayerController playerController;
     private AstroidGenerator astroidGenerator;
     public FogGenerator fogGenerator;
-    public EnemyGenerator enemyGenerator;
+    public EventGenerator eventGenerator;
     public ObjectPooler[] aPools;
     public ObjectPooler sPool;
 
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour {
         starGenerator.SetActive(true);
         astroidGenerator.reset();
         fogGenerator.reset();
-        enemyGenerator.reset();
+        eventGenerator.reset();
         AstroidController[] ac = FindObjectsOfType<AstroidController>();
         for (int a = 0; a < ac.Length; a++)
         {
@@ -164,9 +164,9 @@ public class GameManager : MonoBehaviour {
         resetGame();
         musicPlayer.resumeMusic();
         fogGenerator.enabled = true;
-        enemyGenerator.enabled = true;
+        eventGenerator.enabled = true;
         fogGenerator.startGame();
-        enemyGenerator.startGame();
+        eventGenerator.startGame();
         hideMenu();
         powerUpManager.start();
         paused = false;
@@ -190,7 +190,7 @@ public class GameManager : MonoBehaviour {
         scoreManager.scoreTextEnabled(true);
         scoreManager.collectPoint(true);
         fogGenerator.enabled = true;
-        enemyGenerator.enabled = true;
+        eventGenerator.enabled = true;
         resetGame();
         musicPlayer.startMusic();
         if (firstGame)
@@ -200,7 +200,7 @@ public class GameManager : MonoBehaviour {
         }
 
         fogGenerator.startGame();
-        enemyGenerator.startGame();
+        eventGenerator.startGame();
         powerUpManager.start();
 
         //reset player
@@ -229,8 +229,8 @@ public class GameManager : MonoBehaviour {
         helpBtns.gameObject.SetActive(false);
 
         fogGenerator.enabled = false;
-        enemyGenerator.disable();
-        enemyGenerator.enabled = false;
+        eventGenerator.disable();
+        eventGenerator.enabled = false;
         //TODO
         //freeze fog
         FogController[] fc = FindObjectsOfType<FogController>();
