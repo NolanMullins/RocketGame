@@ -13,16 +13,17 @@ public class EventGenerator : MonoBehaviour
 
     public EnemyGenerator enemyGen;
     public PlanetGenerator planetGenerator;
+    public AstroidStorm storm;
 
     private float timer;
     private float gameTime;
     //OG @ 45s
-    public int spawnEnemy;
+    public int spawnEvent;
     public int spawnPlanet;
 
     private bool isGameActive;
     private bool planetFlip;
-    private bool enemyFlip;
+    private bool flip;
 
     // Use this for initialization
     void Start()
@@ -30,7 +31,7 @@ public class EventGenerator : MonoBehaviour
         gameTime = 0;
         timer = 0;
         isGameActive = false;
-        enemyFlip = false;
+        flip = false;
     }
 
     //called on start of new game
@@ -49,18 +50,25 @@ public class EventGenerator : MonoBehaviour
             return;
         gameTime += Time.deltaTime;
         timer += Time.deltaTime;
-        //if (gameTime >= spawnEnemy)
-        if ((int)gameTime % spawnEnemy == 0)
+
+        //gen a storm
+        //if (!storm.isActive())
+            //storm.startStorm();
+
+        //generate events
+        if ((int)gameTime % spawnEvent == 0)
         {
-            if (enemyFlip)
+            if (flip)
             {
                 timer = 0;
-                enemyGen.spawnEnemy();
-                enemyFlip = false;
+                genEvent();
+                flip = false;
             }
         }
-        else if (!enemyFlip)
-            enemyFlip = true;
+        else if (!flip)
+            flip = true;
+
+        //spwn planets in the background
         if ((int)gameTime % spawnPlanet == 0)
         {
             if (planetFlip)
@@ -77,6 +85,19 @@ public class EventGenerator : MonoBehaviour
             //planetGenerator.spawnNextPlanet();
     }
 
+    public void genEvent()
+    {
+        int type = Random.Range(0,2);
+        if (type==0)
+        {
+            enemyGen.spawnEnemy();
+        }
+        else if (type == 1)
+        {
+            storm.startStorm();
+        }
+    }
+
     public void reset()
     {
         gameTime = 0;
@@ -89,5 +110,6 @@ public class EventGenerator : MonoBehaviour
     {
         enemyGen.disable();
         isGameActive = false;
+        storm.stop();
     }
 }

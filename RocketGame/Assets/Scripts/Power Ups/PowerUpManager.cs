@@ -51,8 +51,7 @@ public class PowerUpManager : MonoBehaviour {
         }
 
     }
-    //TODO
-    //make sure power ups dont spawn on astroids
+
     public void spawn()
     {
         int type = Random.Range(0, (powerUps.Count)/3)*3;

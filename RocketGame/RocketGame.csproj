@@ -259,10 +259,14 @@
     <Compile Include="Assets\LazyFog\Scripts\exampleSceneScript.cs" />
     <Compile Include="Assets\Scripts\AlertLight.cs" />
     <Compile Include="Assets\Scripts\Astroids\AstroidBit.cs" />
+    <Compile Include="Assets\Scripts\Astroids\AstroidBitPad.cs" />
     <Compile Include="Assets\Scripts\Astroids\AstroidController.cs" />
     <Compile Include="Assets\Scripts\Astroids\AstroidGenerator.cs" />
     <Compile Include="Assets\Scripts\Credits.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
+    <Compile Include="Assets\Scripts\Events\AstroidStorm.cs" />
+    <Compile Include="Assets\Scripts\Events\EnemyGenerator.cs" />
+    <Compile Include="Assets\Scripts\Events\EventGenerator.cs" />
     <Compile Include="Assets\Scripts\Fog\FogController.cs" />
     <Compile Include="Assets\Scripts\Fog\FogGenerator.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -277,8 +281,6 @@
     <Compile Include="Assets\Scripts\Misc\MusicPlayer.cs" />
     <Compile Include="Assets\Scripts\Misc\ObjectPooler.cs" />
     <Compile Include="Assets\Scripts\MyDebug.cs" />
-    <Compile Include="Assets\Scripts\Other Generators\EnemyGenerator.cs" />
-    <Compile Include="Assets\Scripts\Other Generators\EventGenerator.cs" />
     <Compile Include="Assets\Scripts\Planets\PlanetController.cs" />
     <Compile Include="Assets\Scripts\Planets\PlanetGenerator.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
