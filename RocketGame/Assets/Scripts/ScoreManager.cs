@@ -12,12 +12,6 @@ public class ScoreManager : MonoBehaviour {
     private float highScore;
     private bool isAlive;
 
-    //planets
-    public ObjectPooler[] planets;
-    public int[] spawnAtPoints;
-    private bool[] used;
-    public PlanetGenerator planetGenerator;
-
     private string distUnit = "km";
 
     public GPGController leaderBoard;
@@ -35,8 +29,6 @@ public class ScoreManager : MonoBehaviour {
         //highScore = 0;
         isAlive = false;
 
-        used = new bool[planets.Length];
-
         reset();
     }
 
@@ -45,14 +37,6 @@ public class ScoreManager : MonoBehaviour {
         if (isAlive)
         {
             score += scorePerSecond * Time.deltaTime;
-            for (int a = 0; a < spawnAtPoints.Length; a++)
-            {
-                if (spawnAtPoints[a] <= score && !used[a])
-                {
-                    planetGenerator.spawnPlanet(a, planets[a].getPooledObject());
-                    used[a] = true;
-                }
-            }
         }
         scoreText.text = Mathf.Round(score) + " " + distUnit;
         menuScoreTxt.text = Mathf.Round(score) + " " + distUnit;
@@ -85,11 +69,6 @@ public class ScoreManager : MonoBehaviour {
     public void reset()
     {
         score = 0;
-        for (int a = 0; a < used.Length; a++)
-        {
-            used[a] = false;
-        }
-        planetGenerator.clearPlanets();
     }
 
     public void scoreTextEnabled(bool enabled)

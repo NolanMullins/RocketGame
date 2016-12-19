@@ -18,6 +18,13 @@ public class StarGenerator : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         timer = 0;
+        StartCoroutine(LateStart(0.1f));
+	}
+
+    IEnumerator LateStart(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        //fnc is a go
         float y = destroyPoint.transform.position.y;
         //increase interval
         float yInc = timeBetweenStars * 0.2f;
@@ -31,7 +38,7 @@ public class StarGenerator : MonoBehaviour {
             obj.SetActive(true);
             y += yInc;
         }
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {

@@ -28,6 +28,8 @@ public class ObjectPooler : MonoBehaviour {
 
     public GameObject getPooledObject()
     {
+        if (pool == null)
+            return null;
         for (int a = 0; a < pool.Count; a++)
         {
             if (!pool[a].activeInHierarchy)
