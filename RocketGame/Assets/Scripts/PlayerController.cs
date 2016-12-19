@@ -157,7 +157,7 @@ public class PlayerController : MonoBehaviour
                     Time.timeScale = 0.65f;
                 timer += Time.deltaTime;
             }
-            else
+            else if (Time.timeScale > 0.1)
             {
                 Time.timeScale = 1;
                 slowed = false;

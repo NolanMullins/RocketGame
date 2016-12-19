@@ -8,9 +8,6 @@ using UnityEngine;
  * Fog / dust
  */
 
-/* Need to take over planet generator generator
- */
-
 public class EventGenerator : MonoBehaviour
 {
 

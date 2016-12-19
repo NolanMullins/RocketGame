@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour {
     private bool firstGame;
     private bool paused;
 
+    private float timeScale;
+
     // Use this for initialization
     void Start() {
         playerController = player.GetComponent<PlayerController>();
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour {
         paused = false;
         powerUpManager.pauseGame();
         powerUpManager.resetGame();
+        timeScale = 1;
     }
 
     // Update is called once per frame
@@ -132,6 +135,7 @@ public class GameManager : MonoBehaviour {
         scoreManager.collectPoint(false);
         helpBtns.gameObject.SetActive(false);
 
+        timeScale = Time.timeScale;
         Time.timeScale = 0f;
         musicPlayer.stopMusic();
         powerUpManager.pauseGame();
@@ -141,7 +145,7 @@ public class GameManager : MonoBehaviour {
 
     public void resumeGame()
     {
-        Time.timeScale = 1f;
+        Time.timeScale = timeScale;
         hideMenu();
         pauseBtn.SetActive(true);
         flightControlLeft.SetActive(true);
