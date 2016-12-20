@@ -90,6 +90,10 @@ public class PowerUpInterface : MonoBehaviour {
     {
 
     }
+    public virtual void resume()
+    {
+
+    }
 
     public virtual bool finsihed()
     {

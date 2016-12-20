@@ -76,4 +76,8 @@ public class SlowMo : PowerUpInterface
     {
         active = true;
     }
+    public override void resume()
+    {
+        active = true;
+    }
 }

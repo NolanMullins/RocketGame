@@ -71,6 +71,10 @@ public class LAAZZZOOORRRR : PowerUpInterface {
     {
         active = true;
     }
+    public override void resume()
+    {
+        active = true;
+    }
 
     public override bool finsihed()
     {

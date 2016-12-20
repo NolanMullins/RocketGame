@@ -90,7 +90,7 @@ public class PowerUpManager : MonoBehaviour {
         isActive = true;
         for (int a = 0; a < powerUps.Count; a++)
         {
-            powerUps[a].start();
+            powerUps[a].resume();
         }
     }
 

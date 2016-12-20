@@ -60,6 +60,11 @@ public class Shield : PowerUpInterface
         }
     }
 
+    public override void resume()
+    {
+        active = true;
+    }
+
     public override void reset()
     {
         base.resetBase();

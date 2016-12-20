@@ -26,7 +26,6 @@ public class AstroidBitPad : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.gameObject.tag);
         if (timer > Time.time && (other.gameObject.tag == "Astroids" || other.gameObject.tag == "AstroidFrag"))
         {
             obj.SetActive(false);
