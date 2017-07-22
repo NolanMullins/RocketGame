@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
+# Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketGame", "RocketGame.csproj", "{A183E45A-A36E-A2E7-D789-B308D47F0C23}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketGame.Editor", "RocketGame.Editor.csproj", "{0622F49B-DADA-3C99-623D-961A0FCF9543}"

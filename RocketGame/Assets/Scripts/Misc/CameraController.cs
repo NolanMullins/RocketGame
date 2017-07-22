@@ -13,7 +13,8 @@ public class CameraController : MonoBehaviour {
         thePlayer = FindObjectOfType<PlayerController>();
         lastPlayerPos = thePlayer.transform.position;
 
-        // set the desired aspect ratio (the values in this example are
+        //DELETE THIS SHIT
+        /*// set the desired aspect ratio (the values in this example are
         // hard-coded for 16:9, but you could make them into public
         // variables instead so you can set them at design time)
         float targetaspect = 9.0f / 16.0f;
@@ -51,7 +52,10 @@ public class CameraController : MonoBehaviour {
             rect.y = 0;
 
             camera.rect = rect;
-        }
+        } */
+        //This stuff is ok :)
+        Camera camera = GetComponent<Camera>();
+        camera.orthographicSize = camera.orthographicSize * (9.0f / 16.0f) / camera.aspect;
     }
 	
 	// Update is called once per frame
