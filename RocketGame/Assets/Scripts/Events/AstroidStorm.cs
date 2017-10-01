@@ -16,6 +16,8 @@ public class AstroidStorm : MonoBehaviour {
 
     private float bound = 2.5f;
 
+    public GameObject spawnHeight;
+
 	// Use this for initialization
 	void Start () {
         endTime = 0;
@@ -44,7 +46,7 @@ public class AstroidStorm : MonoBehaviour {
 
     public void spawn()
     {
-        Vector3 pos = new Vector3(Random.Range(-bound, bound), 6f, 0);
+        Vector3 pos = new Vector3(Random.Range(-bound, bound), spawnHeight.transform.position.y, 1);
         GameObject obj = miniAstroids.getPooledObject();
         obj.transform.position = pos;
         obj.SetActive(true);
