@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class AlertLight : MonoBehaviour {
 
-    public Image light;
+    public new Image light;
 
     private float timer;
     private float alpha;

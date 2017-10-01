@@ -43,6 +43,16 @@ public class AstroidController : MonoBehaviour {
         yVel = yv;
     }
 
+    public float getVelocityX()
+    {
+        return xVel;
+    }
+
+    public float getVelocityY()
+    {
+        return yVel;
+    }
+
     public void shouldMove(bool move)
     {
         this.move = move;

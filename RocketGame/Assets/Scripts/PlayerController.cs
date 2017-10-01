@@ -182,12 +182,13 @@ public class PlayerController : MonoBehaviour
             colide(other, 0);
     }
 
-    public void getHit(Collision2D other)
-    {
-        if (other.contacts[0].point.x <= gameWidth / 2.0 && other.contacts[0].point.x >= -gameWidth / 2.0)
-            colide(other, 0);
-    }
+    /* public void getHit(Collision2D other)
+     {
+         if (other.contacts[0].point.x <= gameWidth / 2.0 && other.contacts[0].point.x >= -gameWidth / 2.0)
+             colide(other, 0);
+     }*/
 
+    //used by enemy laser to destory the player
     public void getHit(Collider2D other)
     {
         if (!hasShield)

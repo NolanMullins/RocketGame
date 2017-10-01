@@ -268,6 +268,7 @@
     <Compile Include="Assets\Scripts\Credits.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Events\AstroidStorm.cs" />
+    <Compile Include="Assets\Scripts\Events\CommetController.cs" />
     <Compile Include="Assets\Scripts\Events\EnemyGenerator.cs" />
     <Compile Include="Assets\Scripts\Events\EventGenerator.cs" />
     <Compile Include="Assets\Scripts\Fog\FogController.cs" />

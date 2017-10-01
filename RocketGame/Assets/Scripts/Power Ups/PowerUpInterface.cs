@@ -41,7 +41,7 @@ public class PowerUpInterface : MonoBehaviour {
     private Vector3 getPoint(float leftBound, float rightBound)
     {
         float x = Random.Range(leftBound, rightBound);
-        float y = 6;
+        float y = manager.getPowerUpSpawnLocation();
         return new Vector3(x, y, 0);
     }
 

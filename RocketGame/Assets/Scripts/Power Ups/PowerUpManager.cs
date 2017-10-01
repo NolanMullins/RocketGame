@@ -22,7 +22,7 @@ public class PowerUpManager : MonoBehaviour {
 
     public Text infoTxt;
 
-
+    public GameObject powerUpGenerationPoint;
     //public Transform holderPosition;
 
     private PowerUpInterface powerUpHolder;
@@ -160,5 +160,10 @@ public class PowerUpManager : MonoBehaviour {
     public DistancePad getDistPad()
     {
         return pad;
+    }
+
+    public float getPowerUpSpawnLocation()
+    {
+        return powerUpGenerationPoint.transform.position.y;
     }
 }
