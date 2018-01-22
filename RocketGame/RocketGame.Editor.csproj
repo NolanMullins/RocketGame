@@ -142,6 +142,45 @@
     <Reference Include="JarResolverLib">
       <HintPath>Assets\PlayServicesResolver\Editor\JarResolverLib.dll</HintPath>
     </Reference>
+    <Reference Include="Octokit">
+      <HintPath>Assets\Plugins\GitHub\Editor\Octokit.dll</HintPath>
+    </Reference>
+    <Reference Include="GitHub.Logging">
+      <HintPath>Assets\Plugins\GitHub\Editor\GitHub.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Rackspace.Threading">
+      <HintPath>Assets\Plugins\GitHub\Editor\Rackspace.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>Assets\Plugins\GitHub\Editor\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="ReadOnlyCollectionsInterfaces">
+      <HintPath>Assets\Plugins\GitHub\Editor\ReadOnlyCollectionsInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="GitHub.Unity">
+      <HintPath>Assets\Plugins\GitHub\Editor\GitHub.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>Assets\Plugins\GitHub\Editor\System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="GitHub.Api">
+      <HintPath>Assets\Plugins\GitHub\Editor\GitHub.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetHttp35">
+      <HintPath>Assets\Plugins\GitHub\Editor\DotNetHttp35.dll</HintPath>
+    </Reference>
+    <Reference Include="AsyncBridge.Net35">
+      <HintPath>Assets\Plugins\GitHub\Editor\AsyncBridge.Net35.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Posix">
+      <HintPath>Assets\Plugins\GitHub\Editor\Mono.Posix.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>Assets\Plugins\GitHub\Editor\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="sfw.net">
+      <HintPath>Assets\Plugins\GitHub\Editor\sfw.net.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-UnityScript">
       <HintPath>Library\ScriptAssemblies\Assembly-UnityScript.dll</HintPath>
     </Reference>
@@ -228,6 +267,8 @@
     <None Include="Assets\Plugins\Android\MainLibProj\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Android\extras\maven-metadata.xml" />
     <None Include="Assets\Plugins\Android\extras\play-services\maven-metadata.xml" />
+    <None Include="Assets\Plugins\GitHub\Editor\CREDITS.txt" />
+    <None Include="Assets\Plugins\GitHub\Editor\EULA.txt" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\ParadeRender.shader" />

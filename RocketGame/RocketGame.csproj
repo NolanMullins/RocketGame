@@ -356,6 +356,8 @@
     <None Include="Assets\Plugins\Android\MainLibProj\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Android\extras\maven-metadata.xml" />
     <None Include="Assets\Plugins\Android\extras\play-services\maven-metadata.xml" />
+    <None Include="Assets\Plugins\GitHub\Editor\CREDITS.txt" />
+    <None Include="Assets\Plugins\GitHub\Editor\EULA.txt" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\ParadeRender.shader" />
