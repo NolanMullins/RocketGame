@@ -88,7 +88,6 @@ public class AstroidGenerator : MonoBehaviour {
                 shift = getNewShift();
             }
 
-
             //keep track of last X
             lastX = shift;
 
@@ -171,6 +170,12 @@ public class AstroidGenerator : MonoBehaviour {
             bits[a].GetComponent<AstroidBit>().setDirection(force);
             astroid.SetActive(false);
         }
+    }
+
+    //TODO
+    public void blowCometUp(GameObject astroid, Vector3 pointOfContact)
+    {
+
     }
 
     private float solveForTheta(GameObject astroid, Vector3 pointOfContact)

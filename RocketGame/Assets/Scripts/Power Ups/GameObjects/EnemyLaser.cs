@@ -3,12 +3,12 @@ using System.Collections;
 
 public class EnemyLaser : MonoBehaviour {
 
-    private AstroidGenerator generator;
+    //private AstroidGenerator generator;
     private Rigidbody2D rb;
     // Use this for initialization
     void Start()
     {
-        generator = GameObject.Find("AstroidGenerator").GetComponent<AstroidGenerator>();
+        //generator = GameObject.Find("AstroidGenerator").GetComponent<AstroidGenerator>();
         rb = GetComponent<Rigidbody2D>();
     }
 

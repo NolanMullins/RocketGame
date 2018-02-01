@@ -9,13 +9,13 @@ public class Lighting : MonoBehaviour {
 
     public Camera main;
 
-    private float alpha;
+    //private float alpha;
     private float gameWidth;
 
     // Use this for initialization
     void Start () {
         gameWidth = main.ViewportToWorldPoint(new Vector3(1, 0)).x * 2;
-        alpha = 1;
+        //alpha = 1;
     }
 	
 	// Update is called once per frame

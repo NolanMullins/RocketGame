@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AstroidStorm : MonoBehaviour {
+public class AstroidStorm : EventShell {
 
     public ObjectPooler miniAstroids;
     public ObjectPooler pads;
@@ -33,13 +33,13 @@ public class AstroidStorm : MonoBehaviour {
             spawn();
 	}
 
-    public void startStorm()
+    public override void startEvent()
     {
         endTime = Time.time+stormLength;
         next = Time.time + stormDensity;
     }
 
-    public void reset()
+    public override void resetEvent()
     {
         endTime = 0;
     }
@@ -60,24 +60,14 @@ public class AstroidStorm : MonoBehaviour {
         next = Time.time + stormDensity;
     }
 
-    public bool isActive()
+    public override bool isRunning()
     {
         return (Time.time < endTime);
     }
 
-    public void stop()
+    public override void disableEvent()
     {
         endTime = 0;
     }
 
-    /*IEnumerator spawnAstroid()
-    {
-        int a = 0;
-        while (true)
-        {
-            Debug.Log("Co: "+a++);
-            yield return null;
-        }
-            
-    }*/
 }

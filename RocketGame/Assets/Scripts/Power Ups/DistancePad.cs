@@ -24,7 +24,7 @@ public class DistancePad : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (timer < checkLength && other.gameObject.tag == "Astroids")
+        if (timer < checkLength && (other.gameObject.tag == "Astroids" || other.gameObject.tag == "Comet"))
         {
             gameObject.SetActive(false);
             power.spawn(manager.leftBound, manager.rightBound, manager.getGenerator().getSpeed());

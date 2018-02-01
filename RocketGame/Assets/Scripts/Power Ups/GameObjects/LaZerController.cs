@@ -21,7 +21,7 @@ public class LaZerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Astroids" || other.gameObject.tag == "enemy")
+        if (other.gameObject.tag == "Astroids" || other.gameObject.tag == "enemy" || other.gameObject.tag == "Comet")
         {
             RaycastHit hit;
             Vector3 contactPoint = new Vector3();
@@ -31,16 +31,19 @@ public class LaZerController : MonoBehaviour
             }
 
             //blow up astroid
-            if (other.gameObject.tag == "Astroids")
-            {
-                generator.blowAstroidUp(other.gameObject, contactPoint);
-                generator.createExplosion(other.transform);
+            switch (other.gameObject.tag) {
+                case "Astroids":
+                    generator.blowAstroidUp(other.gameObject, contactPoint);
+                    generator.createExplosion(other.transform);
+                    break;
+                case "Comet":
+                    generator.blowCometUp(other.gameObject, contactPoint);
+                    generator.createExplosion(other.transform);
+                    break;
+                default:
+                    other.gameObject.GetComponent<EnemyController>().destroy();
+                    break;
             }
-            else
-            {
-                other.gameObject.GetComponent<EnemyController>().destroy();
-            }
-            
 
             this.gameObject.SetActive(false);
         }

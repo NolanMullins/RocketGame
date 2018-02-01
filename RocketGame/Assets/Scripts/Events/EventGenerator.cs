@@ -11,9 +11,10 @@ using UnityEngine;
 public class EventGenerator : MonoBehaviour
 {
 
-    public EnemyGenerator enemyGen;
+    //public EnemyGenerator enemyGen;
     public PlanetGenerator planetGenerator;
-    public AstroidStorm storm;
+    //public AstroidStorm stormGenerator;
+    public List<EventShell> events;
 
     private float timer;
     private float gameTime;
@@ -87,29 +88,24 @@ public class EventGenerator : MonoBehaviour
 
     public void genEvent()
     {
-        int type = Random.Range(0,2);
-        if (type==0)
-        {
-            enemyGen.spawnEnemy();
-        }
-        else if (type == 1)
-        {
-            storm.startStorm();
-        }
+        int type = Random.Range(0,events.Count);
+        events[type].startEvent();
     }
 
     public void reset()
     {
         gameTime = 0;
         timer = 0;
-        enemyGen.reset();
+        foreach (EventShell e in events) 
+            e.resetEvent();
+
         planetGenerator.reset();
     }
 
     public void disable()
     {
-        enemyGen.disable();
+        foreach (EventShell e in events) 
+            e.disableEvent();
         isGameActive = false;
-        storm.stop();
     }
 }

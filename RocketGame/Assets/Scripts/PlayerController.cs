@@ -210,14 +210,17 @@ public class PlayerController : MonoBehaviour
 
     public void colide(Collision2D other, int point)
     {
-        if ((other.gameObject.tag == "Astroids" || other.gameObject.tag == "Wall" || other.gameObject.tag == "enemyLaser") && !hasShield)
+        if ((other.gameObject.tag == "Astroids" || other.gameObject.tag == "Wall" || other.gameObject.tag == "enemyLaser" || other.gameObject.tag == "Comet") && !hasShield)
         {
             //contact point
             //Collider2D collider = other.collider;
             Vector3 contactPoint = other.contacts[point].point;
 
             //blow up astroid
-            astroidGenerator.blowAstroidUp(other.gameObject, contactPoint);
+            if (other.gameObject.tag == "Astroids")
+                astroidGenerator.blowAstroidUp(other.gameObject, contactPoint);
+            else if (other.gameObject.tag == "Comet")
+                astroidGenerator.blowCometUp(other.gameObject, contactPoint);
 
             if (explosionSound.isPlaying)
                 explosionSound.Stop();
@@ -228,15 +231,20 @@ public class PlayerController : MonoBehaviour
             Destroy(lastExplosion);
             lastExplosion = (GameObject)Instantiate(explosion, contactPoint, transform.rotation);
             lastExplosion.SetActive(true);
-            gameObject.SetActive(false);
+            if (gameObject.tag != "comet")
+                gameObject.SetActive(false);
             shell.gameObject.SetActive(false);
             manager.gameOver();
         }
-        else if (hasShield && other.gameObject.tag == "Astroids")
+        else if (hasShield && (other.gameObject.tag == "Astroids" || other.gameObject.tag == "Comet"))
         {
             Vector3 contactPoint = other.contacts[0].point;
+
             //blow up astroid
-            astroidGenerator.blowAstroidUp(other.gameObject, contactPoint);
+            if (other.gameObject.tag == "Astroids")
+                astroidGenerator.blowAstroidUp(other.gameObject, contactPoint);
+            else if (other.gameObject.tag == "Comet")
+                astroidGenerator.blowCometUp(other.gameObject, contactPoint);
 
             if (explosionSound.isPlaying)
                 explosionSound.Stop();

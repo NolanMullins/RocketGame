@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class EnemyGenerator : MonoBehaviour {
+public class EnemyGenerator : EventShell {
 
     public List<GameObject> spawns;
     public List<GameObject> enemyPool;
@@ -23,8 +23,8 @@ public class EnemyGenerator : MonoBehaviour {
 	void Update () {
         
 	}
-
-    public void spawnEnemy()
+    
+    public override void startEvent()
     {
         Transform pos = spawns[Random.Range(0, spawns.Count)].transform;
         spawn = spawnSeq(pos);
@@ -33,7 +33,7 @@ public class EnemyGenerator : MonoBehaviour {
         else
             rightLight.startAnimation();
 
-            StartCoroutine(spawn);        
+        StartCoroutine(spawn);        
     }
 
     IEnumerator spawnSeq(Transform pos)
@@ -59,20 +59,20 @@ public class EnemyGenerator : MonoBehaviour {
         
     }
 
-    public void disable()
+    public override void disableEvent()
     {
         for (int a = 0; a < enemyPool.Count; a ++)
         {
             enemyPool[a].GetComponent<EnemyController>().enabled = false;
         }
-        if (isGenerating())
+        if (isRunning())
         {
             StopCoroutine(spawn);
         }
     }
 
     //TODO
-    public void reset()
+    public override void resetEvent()
     {
         for (int a = 0; a < enemyPool.Count; a++)
         {
@@ -80,7 +80,7 @@ public class EnemyGenerator : MonoBehaviour {
         }
     }
 
-    public bool isGenerating()
+    public override bool isRunning()
     {
         return running;
     }
