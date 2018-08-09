@@ -14,6 +14,11 @@ public class CometController : MonoBehaviour {
     private float sideVelocity;
 
     private bool move;
+    
+    private int health;
+    public int maxHealth;
+
+    public ParticleSystem[] particleSystems;
 
     // Use this for initialization
     void Start () {
@@ -25,6 +30,7 @@ public class CometController : MonoBehaviour {
         this.yVel = yVel;
         this.xVel = xVel;
         move = true;
+        health = maxHealth;
     }
 	
 	// Update is called once per frame
@@ -69,8 +75,20 @@ public class CometController : MonoBehaviour {
         return yVel;
     }
 
+    private void toggleParticle(bool move) {
+        foreach (ParticleSystem sys in particleSystems) 
+        {
+            var main = sys.main;
+            if (move)
+                main.simulationSpeed = 1;
+            else 
+                main.simulationSpeed = 0;
+        }
+    }
+
     public void shouldMove(bool move)
     {
         this.move = move;
+        toggleParticle(move);        
     }
 }

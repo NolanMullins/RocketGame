@@ -147,35 +147,37 @@ public class AstroidGenerator : MonoBehaviour {
 
     public void blowAstroidUp(GameObject astroid, Vector3 pointOfContact)
     {
+        blowObjectUp(astroid, pointOfContact, 8);
+    }
+
+    //TODO
+    public void blowCometUp(GameObject astroid, Vector3 pointOfContact)
+    {
+        blowObjectUp(astroid, pointOfContact, 16);
+    }
+
+    private void blowObjectUp(GameObject obj, Vector3 pointOfContact, int bitCount) {
         List<GameObject> bits = new List<GameObject>();
-        int listSize = Random.Range(4, 6);
+        int listSize = Random.Range(bitCount-1, bitCount+1);
 
-        float x = astroid.transform.position.x;
-        float y = astroid.transform.position.y;
+        float x = obj.transform.position.x;
+        float y = obj.transform.position.y;
 
-        float theta = solveForTheta(astroid, pointOfContact);
+        float theta = solveForTheta(obj, pointOfContact);
 
         for (int a = 0; a < listSize; a++)
         {
             bits.Add(bitPool.getPooledObject());
 
             //set position
-            bits[a].transform.position = new Vector3(x, y, 0);
-            bits[a].SetActive(true);
             float newTheta = Random.Range(-explosionSpread, explosionSpread) + theta;
-
-            Vector2 force;
-            force = new Vector2(Mathf.Cos(newTheta) * explosionForce, Mathf.Sin(newTheta) * explosionForce);
+            Vector2 force = new Vector2(Mathf.Cos(newTheta) * explosionForce*Random.Range(0.6f,1f), Mathf.Sin(newTheta) * explosionForce * Random.Range(0.6f, 1f));
             //bits[a].GetComponent<Rigidbody2D>().AddForce(force);
             bits[a].GetComponent<AstroidBit>().setDirection(force);
-            astroid.SetActive(false);
+            bits[a].transform.position = new Vector3(x, y, 0);
+            bits[a].SetActive(true);
+            obj.SetActive(false);
         }
-    }
-
-    //TODO
-    public void blowCometUp(GameObject astroid, Vector3 pointOfContact)
-    {
-
     }
 
     private float solveForTheta(GameObject astroid, Vector3 pointOfContact)

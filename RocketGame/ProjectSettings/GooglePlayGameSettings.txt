@@ -1,10 +1,9 @@
-lastUpgrade=00933
-proj.pluginVersion=0.9.33
+lastUpgrade=00950
+proj.pluginVersion=0.9.50
 proj.AppId=649078149428
 and.BundleId=com.NolanM.RocketGame
 proj.classDir=Assets
-proj.ConstantsClassName=GPG
-and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--%0d%0aGoogle+Play+game+services+IDs.%0d%0aSave+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.%0d%0a--%3e%0d%0a%3cresources%3e%0d%0a++%3cstring+name%3d%22app_id%22%3e649078149428%3c%2fstring%3e%0d%0a++%3cstring+name%3d%22leaderboard_oort%22%3eCgkItKLKgPISEAIQAA%3c%2fstring%3e%0d%0a%3c%2fresources%3e%0d%0a
+proj.ConstantsClassName=GPGSIds
+and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--%0d%0aGoogle+Play+game+services+IDs.%0d%0aSave+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.%0d%0a--%3e%0d%0a%3cresources%3e%0d%0a++%3c%21--+app_id+--%3e%0d%0a++%3cstring+name%3d%22app_id%22+translatable%3d%22false%22%3e649078149428%3c%2fstring%3e%0d%0a++%3c%21--+package_name+--%3e%0d%0a++%3cstring+name%3d%22package_name%22+translatable%3d%22false%22%3ecom.NolanM.RocketGame%3c%2fstring%3e%0d%0a++%3c%21--+achievement+NULL-1+--%3e%0d%0a++%3cstring+name%3d%22achievement_null1%22+translatable%3d%22false%22%3eCgkItKLKgPISEAIQAg%3c%2fstring%3e%0d%0a++%3c%21--+achievement+NULL-2+--%3e%0d%0a++%3cstring+name%3d%22achievement_null2%22+translatable%3d%22false%22%3eCgkItKLKgPISEAIQAw%3c%2fstring%3e%0d%0a++%3c%21--+achievement+NULL-3+--%3e%0d%0a++%3cstring+name%3d%22achievement_null3%22+translatable%3d%22false%22%3eCgkItKLKgPISEAIQBA%3c%2fstring%3e%0d%0a++%3c%21--+achievement+NULL-4+--%3e%0d%0a++%3cstring+name%3d%22achievement_null4%22+translatable%3d%22false%22%3eCgkItKLKgPISEAIQBQ%3c%2fstring%3e%0d%0a++%3c%21--+achievement+NULL-5+--%3e%0d%0a++%3cstring+name%3d%22achievement_null5%22+translatable%3d%22false%22%3eCgkItKLKgPISEAIQBg%3c%2fstring%3e%0d%0a++%3c%21--+leaderboard+Oort+--%3e%0d%0a++%3cstring+name%3d%22leaderboard_oort%22+translatable%3d%22false%22%3eCgkItKLKgPISEAIQAA%3c%2fstring%3e%0d%0a%3c%2fresources%3e
 and.ClientId=
-proj.requireGPlus=false
 android.SetupDone=true

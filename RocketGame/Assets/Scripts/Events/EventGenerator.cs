@@ -42,6 +42,7 @@ public class EventGenerator : MonoBehaviour
         timer = 0;
         isGameActive = true;
         planetFlip = true;
+        togglePause(false);
     }
 
     // Update is called once per frame
@@ -100,6 +101,7 @@ public class EventGenerator : MonoBehaviour
             e.resetEvent();
 
         planetGenerator.reset();
+        togglePause(false);
     }
 
     public void disable()
@@ -107,5 +109,12 @@ public class EventGenerator : MonoBehaviour
         foreach (EventShell e in events) 
             e.disableEvent();
         isGameActive = false;
+        togglePause(true);
+    }
+
+    public void togglePause(bool paused)
+    {
+        foreach (EventShell e in events)
+            e.togglePause(paused);
     }
 }

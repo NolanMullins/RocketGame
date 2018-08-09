@@ -141,6 +141,7 @@ public class GameManager : MonoBehaviour {
         powerUpManager.pauseGame();
         resume.SetActive(true);
         paused = true;
+        eventGenerator.togglePause(true);
     }
 
     public void resumeGame()
@@ -155,6 +156,7 @@ public class GameManager : MonoBehaviour {
         powerUpManager.resumeGame();
         resume.SetActive(false);
         paused = false;
+        eventGenerator.togglePause(false);
     }
 
     public void restartGame()
@@ -169,6 +171,7 @@ public class GameManager : MonoBehaviour {
         musicPlayer.resumeMusic();
         fogGenerator.enabled = true;
         eventGenerator.enabled = true;
+        eventGenerator.togglePause(false);
         fogGenerator.startGame();
         eventGenerator.startGame();
         hideMenu();
@@ -195,6 +198,7 @@ public class GameManager : MonoBehaviour {
         scoreManager.collectPoint(true);
         fogGenerator.enabled = true;
         eventGenerator.enabled = true;
+        eventGenerator.togglePause(false);
         resetGame();
         musicPlayer.startMusic();
         if (firstGame)

@@ -91,4 +91,10 @@ public class CometGenerator : EventShell {
     {
         return running;
     }
+
+    public override void togglePause(bool paused)
+    {
+        foreach (GameObject comet in cometPool.getPool())
+            comet.GetComponent<CometController>().shouldMove(!paused);
+    }
 }

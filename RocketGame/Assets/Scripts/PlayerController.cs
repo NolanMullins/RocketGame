@@ -244,7 +244,10 @@ public class PlayerController : MonoBehaviour
             if (other.gameObject.tag == "Astroids")
                 astroidGenerator.blowAstroidUp(other.gameObject, contactPoint);
             else if (other.gameObject.tag == "Comet")
+            {
+                setShieldActive(false);
                 astroidGenerator.blowCometUp(other.gameObject, contactPoint);
+            }
 
             if (explosionSound.isPlaying)
                 explosionSound.Stop();

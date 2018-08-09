@@ -20,4 +20,8 @@ public abstract class EventShell : MonoBehaviour {
 		return false;
 	}
 
+	public virtual void togglePause(bool paused) {
+
+	}
+
 }
