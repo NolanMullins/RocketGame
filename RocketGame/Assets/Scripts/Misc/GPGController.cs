@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System;
 using GooglePlayGames;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
@@ -21,6 +21,7 @@ public class GPGController : MonoBehaviour {
         PlayGamesPlatform.Activate();
 
         loggedIn = false;
+        return;
         if (PlayerPrefs.HasKey("gpg") && PlayerPrefs.GetInt("gpg") == 1)
         {
             LogIn();
@@ -31,13 +32,20 @@ public class GPGController : MonoBehaviour {
     #region BUTTON_CALLBACKS
     public void onClick()
     {
-        if (!PlayGamesPlatform.Instance.IsAuthenticated())
+        try
         {
-            LogIn();
-        }
-        else
+            if (!PlayGamesPlatform.Instance.IsAuthenticated())
+            {
+                LogIn();
+            }
+            else
+            {
+                OnShowLeaderBoard();
+            }
+        } 
+        catch (Exception e) 
         {
-            OnShowLeaderBoard();
+            Debug.LogError(e);
         }
     }
     /// <summary>
@@ -45,26 +53,34 @@ public class GPGController : MonoBehaviour {
     /// </summary>
     public void LogIn()
     {
-        Social.localUser.Authenticate((bool success) =>
+        try 
         {
-            loggedIn = success;
-            if (success)
+            Social.localUser.Authenticate((bool success) =>
             {
-                Debug.Log("Login Sucess");
-                if (!PlayerPrefs.HasKey("gpg") || PlayerPrefs.GetInt("gpg")==0)
+                loggedIn = success;
+                if (success)
                 {
-                    PlayerPrefs.SetInt("gpg", 1);
-                    if (PlayerPrefs.HasKey("HS"))
+                    Debug.Log("Login Sucess");
+                    if (!PlayerPrefs.HasKey("gpg") || PlayerPrefs.GetInt("gpg")==0)
                     {
-                        addScore((int)Mathf.Round(PlayerPrefs.GetFloat("HS")));    
-                        //leaderBoard.setHighScore((int)Mathf.Round(highScore));
+                        PlayerPrefs.SetInt("gpg", 1);
+                        if (PlayerPrefs.HasKey("HS"))
+                        {
+                            addScore((int)Mathf.Round(PlayerPrefs.GetFloat("HS")));    
+                            //leaderBoard.setHighScore((int)Mathf.Round(highScore));
+                        }
                     }
                 }
-            }
-            else {
-                Debug.Log("Login failed");
-            }
-        });
+                else 
+                {
+                    Debug.Log("Login failed");
+                }
+            });
+        } 
+        catch (Exception e) 
+        {
+            Debug.LogError(e);
+        }
     }
     /// <summary>
     /// Shows All Available Leaderborad
@@ -79,9 +95,9 @@ public class GPGController : MonoBehaviour {
     /// </summary>
     public void OnAddScoreToLeaderBorad(int score)
     {
-        if (Social.localUser.authenticated)
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
-            Social.ReportScore(score, leaderboard, (bool success) =>
+            PlayGamesPlatform.Instance.ReportScore(score, leaderboard, (bool success) =>
             {
                 if (success)
                 {

@@ -37,6 +37,10 @@ public class GameManager : MonoBehaviour {
 
     private float timeScale;
 
+    void Awake() {
+        Application.targetFrameRate = 60;
+    }
+
     // Use this for initialization
     void Start() {
         playerController = player.GetComponent<PlayerController>();
