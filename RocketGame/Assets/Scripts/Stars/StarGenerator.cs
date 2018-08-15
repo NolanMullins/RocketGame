@@ -15,6 +15,9 @@ public class StarGenerator : MonoBehaviour {
 
     private float timer;
 
+    public float yScale;
+    public float xScale;
+
 	// Use this for initialization
 	void Start () 
     {
@@ -31,12 +34,7 @@ public class StarGenerator : MonoBehaviour {
         float yInc = timeBetweenStars * 0.2f;
         while (y < generationPoint.transform.position.y)
         {
-            GameObject obj = starPool.getPooledObject();
-            obj.transform.position = new Vector3(generationPoint.transform.position.x + Random.Range(-xBound, xBound), y, 0);
-            obj.transform.rotation = transform.rotation;
-            float scale = Random.Range(smallest, biggest);
-            obj.transform.localScale = new Vector3(scale, scale, scale);
-            obj.SetActive(true);
+            spawnStar(y);
             y += yInc;
         }
     }
@@ -47,16 +45,21 @@ public class StarGenerator : MonoBehaviour {
         timer += Time.deltaTime;
         if (timer > timeBetweenStars)
         {
-            GameObject obj = starPool.getPooledObject();
-            obj.transform.position = new Vector3(generationPoint.transform.position.x + Random.Range(-xBound, xBound), generationPoint.transform.position.y, 0);
-            obj.transform.rotation = transform.rotation;
-            float scale = Random.Range(smallest, biggest);
-            obj.transform.localScale = new Vector3(scale, scale, scale);
-            obj.SetActive(true);
-
+            spawnStar(generationPoint.transform.position.y);
             timer = 0;
         }
 	}
+
+    void spawnStar(float yVal) {
+        GameObject obj = starPool.getPooledObject();
+        obj.transform.position = new Vector3(generationPoint.transform.position.x + Random.Range(-xBound, xBound), yVal, 0);
+        obj.transform.rotation = transform.rotation;
+        float scale = Random.Range(smallest, biggest);
+        float bonusScale = scale/biggest;
+        obj.GetComponent<StarController>().setScale(xScale*bonusScale, yScale*bonusScale);
+        obj.transform.localScale = new Vector3(scale, scale, scale);
+        obj.SetActive(true);
+    }
 
     public void shiftStars(float shift) 
     {
