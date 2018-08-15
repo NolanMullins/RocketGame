@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 public class StarGenerator : MonoBehaviour {
 
     public float timeBetweenStars;
@@ -16,7 +16,8 @@ public class StarGenerator : MonoBehaviour {
     private float timer;
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
         timer = 0;
         StartCoroutine(LateStart(0.1f));
 	}
@@ -41,7 +42,8 @@ public class StarGenerator : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+    {
         timer += Time.deltaTime;
         if (timer > timeBetweenStars)
         {
@@ -55,5 +57,15 @@ public class StarGenerator : MonoBehaviour {
             timer = 0;
         }
 	}
+
+    public void shiftStars(float shift) 
+    {
+        List<GameObject> pool = starPool.getPool();
+        foreach (GameObject o in pool) 
+        {
+            if (o.activeInHierarchy)
+                o.GetComponent<StarController>().shiftX(shift);
+        }
+    }
 
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -31,6 +32,8 @@ public class PlayerController : MonoBehaviour
 
     private bool left;
     private bool right;
+
+    public List<StarGenerator> starGen;
 
     //Power ups
     public PowerUpManager powerUps;
@@ -144,6 +147,9 @@ public class PlayerController : MonoBehaviour
                 float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg - 90;
                 transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
+
+            foreach (StarGenerator gen in starGen)
+                gen.shiftStars(xVel*0.0005f);
 
             myBody.velocity = new Vector2(xVel, 0);
         }

@@ -28,4 +28,8 @@ public class StarController : MonoBehaviour {
     {
         this.move = move;
     }
+
+    public void shiftX(float shift) {
+        transform.position = new Vector3(transform.position.x+shift, transform.position.y);
+    }
 }
