@@ -10,7 +10,7 @@ public class StarGenerator : MonoBehaviour {
     //scale
     public float smallest;
     public float biggest;
-    //bounds
+    //OG bounds = 2.75 somehow works lol
     public float xBound;
 
     private float timer;
@@ -18,9 +18,12 @@ public class StarGenerator : MonoBehaviour {
     public float yScale;
     public float xScale;
 
+    public Camera main;
+
 	// Use this for initialization
 	void Start () 
     {
+        xBound = main.ViewportToWorldPoint(new Vector3(1, 0)).x;
         timer = 0;
         StartCoroutine(LateStart(0.1f));
 	}
