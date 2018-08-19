@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
             }
 
             foreach (StarGenerator gen in starGen)
-                gen.shiftStars(xVel*0.0005f);
+                gen.shiftStars(xVel*0.00025f);
 
             myBody.velocity = new Vector2(xVel, 0);
         }

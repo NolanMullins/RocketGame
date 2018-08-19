@@ -21,7 +21,7 @@ public class FogController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (move)
-            transform.position = new Vector3(transform.position.x, transform.position.y - velocity * Time.deltaTime);
+            transform.position = new Vector3(transform.position.x, transform.position.y - velocity * Time.deltaTime, -10);
         if (transform.position.y < destroyPoint.transform.position.y)
         {
             //destroy

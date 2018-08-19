@@ -21,7 +21,6 @@ public class GPGController : MonoBehaviour {
         PlayGamesPlatform.Activate();
 
         loggedIn = false;
-        return;
         if (PlayerPrefs.HasKey("gpg") && PlayerPrefs.GetInt("gpg") == 1)
         {
             LogIn();

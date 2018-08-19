@@ -9,6 +9,8 @@ public class StarController : MonoBehaviour {
 
     private float xScale=1, yScale=1;
 
+    private float xBound;
+
 	// Use this for initialization
 	void Start () {
 	    destroyPoint = GameObject.Find("DestroyPoint");
@@ -18,6 +20,10 @@ public class StarController : MonoBehaviour {
     public void setScale(float xScale, float yScale) {
         this.xScale = xScale;
         this.yScale = yScale;
+    }
+
+    public void setXBound(float xBound) {
+        this.xBound = xBound;
     }
 	
 	// Update is called once per frame
@@ -37,6 +43,8 @@ public class StarController : MonoBehaviour {
     }
 
     public void shiftX(float shift) {
+        if (Mathf.Abs(transform.position.x+shift*xScale) > xBound)
+            gameObject.SetActive(false);
         transform.position = new Vector3(transform.position.x+shift*xScale, transform.position.y);
     }
 }
